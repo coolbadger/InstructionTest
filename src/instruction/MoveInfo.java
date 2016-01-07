@@ -6,6 +6,7 @@ import java.util.Date;
  * Created by Badger on 16/1/7.
  */
 public class MoveInfo {
+    private String batchId;                 //作业批次号
     private int moveId;                     //作业编号
     private int movekind;                   //作业类型
     private String unitId;                  //箱编号
