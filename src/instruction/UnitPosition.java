@@ -9,6 +9,21 @@ public class UnitPosition {
     private String lay;         //位
     private String tie;         //层
 
+    public String toString() {
+        String unionStr = area + bay + lay + tie;
+        return unionStr;
+    }
+
+    public UnitPosition() {
+    }
+
+    public UnitPosition(String area, String bay, String lay, String tie) {
+        this.area = area;
+        this.bay = bay;
+        this.lay = lay;
+        this.tie = tie;
+    }
+
     public String getArea() {
         return area;
     }

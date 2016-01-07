@@ -8,10 +8,10 @@ import java.util.Date;
 public class MoveInfo {
     private String batchId;                 //作业批次号
     private int moveId;                     //作业编号
-    private int movekind;                   //作业类型
+    private String moveKind;                //作业类型
     private String unitId;                  //箱编号
 
-    private UnitPosition eFromPositon;      //计划提箱位置
+    private UnitPosition eFromPosition;      //计划提箱位置
     private UnitPosition eToPosition;       //计划放箱位置
     private UnitPosition aFromPosition;     //实际提箱位置
     private UnitPosition aToPosition;       //实际放箱位置
@@ -25,7 +25,7 @@ public class MoveInfo {
     private Date carryTime;                 //Carry确认时间
     private Date putTime;                   //Put确认时间
 
-    private int state;                      //状态
+    private int state;                      //状态,未发送,作业中,已完成
 
     public String getBatchId() {
         return batchId;
@@ -43,12 +43,12 @@ public class MoveInfo {
         this.moveId = moveId;
     }
 
-    public int getMovekind() {
-        return movekind;
+    public String getMoveKind() {
+        return moveKind;
     }
 
-    public void setMovekind(int movekind) {
-        this.movekind = movekind;
+    public void setMoveKind(String moveKind) {
+        this.moveKind = moveKind;
     }
 
     public String getUnitId() {
@@ -59,12 +59,12 @@ public class MoveInfo {
         this.unitId = unitId;
     }
 
-    public UnitPosition geteFromPositon() {
-        return eFromPositon;
+    public UnitPosition geteFromPosition() {
+        return eFromPosition;
     }
 
-    public void seteFromPositon(UnitPosition eFromPositon) {
-        this.eFromPositon = eFromPositon;
+    public void seteFromPosition(UnitPosition eFromPosition) {
+        this.eFromPosition = eFromPosition;
     }
 
     public UnitPosition geteToPosition() {
