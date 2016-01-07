@@ -4,8 +4,8 @@ package instruction;
  * Created by Badger on 16/1/7.
  */
 public class UnitPosition {
-    private String area;        //场区
-    private String bay;         //贝
-    private String lay;         //位
-    private String tie;         //层
+    public String area;        //场区
+    public String bay;         //贝
+    public String lay;         //位
+    public String tie;         //层
 }
