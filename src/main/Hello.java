@@ -12,9 +12,9 @@ public class Hello {
 
         String outStr = "V-LH526002-030002";
 //        outStr = new JsonProcess().getJsonStr(null);
-//        new JsonProcess().getMoveInfos(null);
+        new JsonProcess().getMoveInfos(null);
 //        System.out.println(new UnitPosition(outStr).toString());
-        outStr = new JsonProcess().getJsonStr(new LoadConfig().getInstructions());
+//        outStr = new JsonProcess().getJsonStr(new LoadConfig().getInstructions());
         System.out.println(outStr);
 
     }

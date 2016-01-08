@@ -29,6 +29,7 @@ class JsonProcess {
         assert root.Instructions instanceof List
 
         List moveInstructionList = root.Instructions
+        Date instructionDate = Date.parse(dateFormat, root.dispatchTime)
         for (def movInsItemArr in moveInstructionList) {
             def movInsItem = movInsItemArr.content
 
@@ -74,11 +75,16 @@ class JsonProcess {
                 moveInfo.carryCHE = movInsItem.carryCHE
                 moveInfo.putCHE = movInsItem.putCHE
 
-                moveInfo.dispatchTime = Date.parse(dateFormat, movInsItem.dispatchTime)
-                moveInfo.fetchTime = Date.parse(dateFormat, movInsItem.fetchTime)
-                moveInfo.carryTime = Date.parse(dateFormat, movInsItem.carryTime)
-                moveInfo.putTime = Date.parse(dateFormat, movInsItem.putTime)
+                moveInfo.dispatchTime = instructionDate
+                if (movInsItem.fetchTime)
+                    moveInfo.fetchTime = Date.parse(dateFormat, movInsItem.fetchTime)
+                if (movInsItem.carryTime)
+                    moveInfo.carryTime = Date.parse(dateFormat, movInsItem.carryTime)
+                if (movInsItem.putTime)
+                    moveInfo.putTime = Date.parse(dateFormat, movInsItem.putTime)
 
+                if (moveInfo.toString())
+                    println(moveInfo.toString())
             } catch (Exception e) {
                 e.printStackTrace()
             }
@@ -103,6 +109,7 @@ class JsonProcess {
                 moveKind moveInfo.moveKind
                 state moveInfo.state
                 unitId moveInfo.unitId
+                unitLength moveInfo.unitLength
 
                 //预计提箱位置
                 eFromPosition {

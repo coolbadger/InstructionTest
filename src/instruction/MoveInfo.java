@@ -1,5 +1,6 @@
 package instruction;
 
+import java.lang.reflect.Method;
 import java.util.Date;
 
 /**
@@ -28,6 +29,45 @@ public class MoveInfo {
     private Date putTime;                   //Put确认时间
 
     private int state;                      //状态,未发送,作业中,已完成
+
+    public String toString() {
+        String outStr = "";
+        outStr += this.batchId + "|";
+        outStr += this.unitId + "|";
+        if (this.eFromPosition != null)
+            outStr += this.eFromPosition.toString() + "|";
+        else
+            outStr += "--|";
+        if (this.eToPosition != null)
+            outStr += this.eToPosition.toString() + "|";
+        else
+            outStr += "--|";
+        if (this.aFromPosition != null)
+            outStr += this.aFromPosition.toString() + "|";
+        else
+            outStr += "--|";
+        if (this.aToPosition != null)
+            outStr += this.aToPosition.toString() + "|";
+        else
+            outStr += "--|";
+
+
+        return outStr;
+    }
+
+    //获取属性值
+
+    private Object getFieldValueByName(String fieldName, Object o) {
+        try {
+            String firstLetter = fieldName.substring(0, 1).toUpperCase();
+            String getter = "get" + firstLetter + fieldName.substring(1);
+            Method method = o.getClass().getMethod(getter, new Class[]{});
+            Object value = method.invoke(o, new Object[]{});
+            return value;
+        } catch (Exception e) {
+            return null;
+        }
+    }
 
 
     public String getUnitLength() {
