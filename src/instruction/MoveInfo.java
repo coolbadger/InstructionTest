@@ -15,10 +15,10 @@ public class MoveInfo {
 
     private String unitLength;              //箱长
 
-    private UnitPosition eFromPosition;      //计划提箱位置
-    private UnitPosition eToPosition;       //计划放箱位置
-    private UnitPosition aFromPosition;     //实际提箱位置
-    private UnitPosition aToPosition;       //实际放箱位置
+    private UnitPosition exFromPosition;      //计划提箱位置
+    private UnitPosition exToPosition;       //计划放箱位置
+    private UnitPosition acFromPosition;     //实际提箱位置
+    private UnitPosition acToPosition;       //实际放箱位置
 
     private String fetchCHE;                //Fetch设备
     private String carryCHE;                //Carry设备
@@ -35,20 +35,20 @@ public class MoveInfo {
         String outStr = "";
         outStr += this.batchId + "|";
         outStr += this.unitId + "|";
-        if (this.eFromPosition != null)
-            outStr += this.eFromPosition.toString() + "|";
+        if (this.exFromPosition != null)
+            outStr += this.exFromPosition.toString() + "|";
         else
             outStr += "--|";
-        if (this.eToPosition != null)
-            outStr += this.eToPosition.toString() + "|";
+        if (this.exToPosition != null)
+            outStr += this.exToPosition.toString() + "|";
         else
             outStr += "--|";
-        if (this.aFromPosition != null)
-            outStr += this.aFromPosition.toString() + "|";
+        if (this.acFromPosition != null)
+            outStr += this.acFromPosition.toString() + "|";
         else
             outStr += "--|";
-        if (this.aToPosition != null)
-            outStr += this.aToPosition.toString() + "|";
+        if (this.acToPosition != null)
+            outStr += this.acToPosition.toString() + "|";
         else
             outStr += "--|";
 
@@ -120,36 +120,36 @@ public class MoveInfo {
         this.unitId = unitId;
     }
 
-    public UnitPosition geteFromPosition() {
-        return eFromPosition;
+    public UnitPosition getExFromPosition() {
+        return exFromPosition;
     }
 
-    public void seteFromPosition(UnitPosition eFromPosition) {
-        this.eFromPosition = eFromPosition;
+    public void setExFromPosition(UnitPosition exFromPosition) {
+        this.exFromPosition = exFromPosition;
     }
 
-    public UnitPosition geteToPosition() {
-        return eToPosition;
+    public UnitPosition getExToPosition() {
+        return exToPosition;
     }
 
-    public void seteToPosition(UnitPosition eToPosition) {
-        this.eToPosition = eToPosition;
+    public void setExToPosition(UnitPosition exToPosition) {
+        this.exToPosition = exToPosition;
     }
 
-    public UnitPosition getaFromPosition() {
-        return aFromPosition;
+    public UnitPosition getAcFromPosition() {
+        return acFromPosition;
     }
 
-    public void setaFromPosition(UnitPosition aFromPosition) {
-        this.aFromPosition = aFromPosition;
+    public void setAcFromPosition(UnitPosition acFromPosition) {
+        this.acFromPosition = acFromPosition;
     }
 
-    public UnitPosition getaToPosition() {
-        return aToPosition;
+    public UnitPosition getAcToPosition() {
+        return acToPosition;
     }
 
-    public void setaToPosition(UnitPosition aToPosition) {
-        this.aToPosition = aToPosition;
+    public void setAcToPosition(UnitPosition acToPosition) {
+        this.acToPosition = acToPosition;
     }
 
     public String getFetchCHE() {
