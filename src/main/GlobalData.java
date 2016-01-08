@@ -18,13 +18,13 @@ public class GlobalData {
 
 
     //监听器及其设置
-    private List<IGlobalData> globalDataChangeListeners = new ArrayList<IGlobalData>();
+    private static List<IGlobalData> globalDataChangeListeners = new ArrayList<IGlobalData>();
 
-    public void addGlobalDataChangeListener(IGlobalData iGlobalData){
-        this.globalDataChangeListeners.add(iGlobalData);
+    public static void addGlobalDataChangeListener(IGlobalData iGlobalData){
+        globalDataChangeListeners.add(iGlobalData);
     }
 
-    public void notifyChange(){//通知所有监听者
+    private void notifyChange(){//通知所有监听者
         for(IGlobalData iGlobalData:globalDataChangeListeners){
             iGlobalData.globalDataChanged();
         }

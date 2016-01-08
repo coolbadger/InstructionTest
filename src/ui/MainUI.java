@@ -3,6 +3,8 @@ package ui;
 import instruction.LoadConfig;
 import instruction.MoveInfo;
 import instruction.UnitPosition;
+import main.GlobalData;
+import main.IGlobalData;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -77,26 +79,8 @@ public class MainUI extends JFrame {
 					this.menuItemImportSampleData.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							DefaultTableModel tableModel = (DefaultTableModel)tableWQL.getModel();
-							while (tableModel.getRowCount()>0){//清除表格中已有数据
-								tableModel.removeRow(tableModel.getRowCount());
-							}
-							List<MoveInfo> sampleList = new LoadConfig().getInstructions();
-							for(MoveInfo moveInfo:sampleList){
-								List<String> propertyList = MoveInfo.getFiledsInfo();//取出属性列表
-								Object[] rowData = new Object[propertyList.size()];
-								for (int i =0;i<propertyList.size();i++){
-									String property = propertyList.get(i);
-									Object value = moveInfo.getFieldValueByName(property);//取出每个属性的值，判断
-									if(value instanceof UnitPosition){
-										rowData[i] = value.toString();
-									}
-									else{
-										rowData[i] = value;
-									}
-								}
-								tableModel.addRow(rowData);
-							}
+
+
 						}
 					});
 					this.menu.add(this.menuItemImportSampleData);
@@ -158,6 +142,33 @@ public class MainUI extends JFrame {
 				}
 			}
 		}
+		//监听全局变量
+		GlobalData.addGlobalDataChangeListener(new IGlobalData() {
+			@Override
+			public void globalDataChanged() {
+				DefaultTableModel tableModel = (DefaultTableModel)tableWQL.getModel();
+				while (tableModel.getRowCount()>0){//清除表格中已有数据
+					tableModel.removeRow(tableModel.getRowCount());
+				}
+				List<MoveInfo> sampleList = new LoadConfig().getInstructions();
+				for(MoveInfo moveInfo:sampleList){
+					List<String> propertyList = MoveInfo.getFiledsInfo();//取出属性列表
+					Object[] rowData = new Object[propertyList.size()];
+					for (int i =0;i<propertyList.size();i++){
+						String property = propertyList.get(i);
+						Object value = moveInfo.getFieldValueByName(property);//取出每个属性的值，判断
+						if(value instanceof UnitPosition){
+							rowData[i] = value.toString();
+						}
+						else{
+							rowData[i] = value;
+						}
+					}
+					tableModel.addRow(rowData);
+				}
+			}
+		});
+
 	}
 
 }
