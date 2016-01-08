@@ -18,7 +18,7 @@ class LoadConfig {
     private Logger logger
 
     public LoadConfig() {
-        filePath = "/Users/Badger/Project/项目/洋山/Code/InstructionTest/MoveEvent_Load.xls"
+        filePath = "MoveEvent_Load.xls"
         file = new File(filePath)
         workbook = new HSSFWorkbook(new FileInputStream(file))
         logger = UiGlobal.logger

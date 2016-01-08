@@ -1,7 +1,8 @@
 package instruction;
 
+import java.lang.reflect.Field;
 import java.lang.reflect.Method;
-import java.util.Date;
+import java.util.*;
 
 /**
  * Created by Badger on 16/1/7.
@@ -57,18 +58,27 @@ public class MoveInfo {
 
     //获取属性值
 
-    private Object getFieldValueByName(String fieldName, Object o) {
+    public Object getFieldValueByName(String fieldName) {
         try {
             String firstLetter = fieldName.substring(0, 1).toUpperCase();
             String getter = "get" + firstLetter + fieldName.substring(1);
-            Method method = o.getClass().getMethod(getter, new Class[]{});
-            Object value = method.invoke(o, new Object[]{});
+            Method method = this.getClass().getMethod(getter, new Class[]{});
+            Object value = method.invoke(this, new Object[]{});
             return value;
         } catch (Exception e) {
             return null;
         }
     }
-
+    //获取属性列表
+    static public List getFiledsInfo(){
+        Field[] fields= MoveInfo.class.getDeclaredFields();
+        String[] fieldNames=new String[fields.length];
+        List list = new ArrayList();
+        for(int i=0;i<fields.length;i++){
+            list.add(fields[i].getName());
+        }
+        return list;
+    }
 
     public String getUnitLength() {
         return unitLength;
@@ -205,5 +215,6 @@ public class MoveInfo {
     public void setState(int state) {
         this.state = state;
     }
+
 
 }
