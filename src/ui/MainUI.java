@@ -12,6 +12,7 @@ import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
+import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
 import javax.swing.border.TitledBorder;
@@ -76,10 +77,12 @@ public class MainUI extends JFrame {
 					this.menuItemImportSampleData.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							DefaultTableModel tableModel = (DefaultTableModel)tableWQL.getModel();
+							while (tableModel.getRowCount()>0){//清除表格中已有数据
+								tableModel.removeRow(tableModel.getRowCount());
+							}
 							List<MoveInfo> sampleList = new LoadConfig().getInstructions();
 							for(MoveInfo moveInfo:sampleList){
-								DefaultTableModel tableModel = (DefaultTableModel)tableWQL.getModel();
-
 								List<String> propertyList = MoveInfo.getFiledsInfo();//取出属性列表
 								Object[] rowData = new Object[propertyList.size()];
 								for (int i =0;i<propertyList.size();i++){
@@ -139,6 +142,8 @@ public class MainUI extends JFrame {
 						System.out.println(col);
 						tableModel.addColumn(col);
 					}
+
+
 
 					this.tableWQL.setModel(tableModel);
 					this.tableWQL.setRowSorter(new TableRowSorter(tableModel));
