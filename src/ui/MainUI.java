@@ -111,7 +111,7 @@ public class MainUI extends JFrame {
 			this.panelNorth = new JPanel();
 			this.contentPane.add(this.panelNorth, BorderLayout.NORTH);
 			{
-				this.buttonSendSelectedIns = new JButton("发送选中指令");
+				this.buttonSendSelectedIns = new JButton("生成发送指令");
 				this.buttonSendSelectedIns.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
@@ -121,6 +121,8 @@ public class MainUI extends JFrame {
 					}
 				});
 				this.panelNorth.add(this.buttonSendSelectedIns);
+
+
 			}
 
 		}
