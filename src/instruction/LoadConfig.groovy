@@ -27,7 +27,7 @@ class LoadConfig {
 
     public List<MoveInfo> getInstructions() {
         //暂时取固定批次号
-        String batchStr = "batch001"
+        String batchStr = ""
         int sheetCount = workbook.size()
         int currentSheet = 1
         int itemIndex = 0
@@ -35,6 +35,7 @@ class LoadConfig {
             logger.info("读取Sheet(" + currentSheet + "/" + sheetCount + "):" + sheet.sheetName)
 //            logger.info("一共有" + sheet.lastRowNum + "行数据")
 
+            batchStr = sheet.sheetName
             //处理每一行数据
             sheet.eachWithIndex { row, index ->
                 boolean read_correct = true

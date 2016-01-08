@@ -129,7 +129,9 @@ class JsonProcess {
             Instructions(InstructionList)
             dispatchTime new Date().format(dateFormat)
         }
-        this.jsonStr = JsonOutput.prettyPrint(builder.toString())
+        this.jsonStr = builder.toString()
+        //为直观调试方便的格式化输出
+//        this.jsonStr = JsonOutput.prettyPrint(builder.toString())
         return this.jsonStr;
     }
 }
