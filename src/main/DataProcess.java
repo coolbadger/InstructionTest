@@ -33,10 +33,24 @@ public class DataProcess {
         List<MoveInfo> moveInstructions = new ArrayList<MoveInfo>();
         for (String key : keyList) {
             MoveInfo moveInfo = GlobalData.GLOBAL_MOVEINFO_LIST.get(key);
-            if (moveInfo != null)
+            if (moveInfo != null) {
                 moveInstructions.add(moveInfo);
+                moveInfo.setState(1);
+                GlobalData.GLOBAL_MOVEINFO_LIST.put(key, moveInfo);
+            }
         }
-        return new JsonProcess().getJsonStr(moveInstructions);
+        String jsonStr = new JsonProcess().getJsonStr(moveInstructions);
+        //指令状态重置
+        if (jsonStr.length() > 10) {
+            for (String key : keyList) {
+                MoveInfo moveInfo = GlobalData.GLOBAL_MOVEINFO_LIST.get(key);
+                if (moveInfo != null) {
+                    moveInfo.setState(1);
+                    GlobalData.GLOBAL_MOVEINFO_LIST.put(key, moveInfo);
+                }
+            }
+        }
+        return jsonStr;
     }
 
     private void setGlobalList(List<MoveInfo> moveInfoList) {

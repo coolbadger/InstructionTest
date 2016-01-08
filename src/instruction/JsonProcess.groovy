@@ -2,6 +2,7 @@ package instruction
 
 import demo.Instruction
 import groovy.json.JsonBuilder
+import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 /**
@@ -10,7 +11,7 @@ import groovy.json.JsonSlurper
 class JsonProcess {
     private String jsonStr
     private List<MoveInfo> moveInfoList
-    private String dateFormat = "YYYY-MM-DD HH:mm:ss"
+    private String dateFormat = "yyyy-MM-dd HH:mm:ss"
 
     public JsonProcess() {
         jsonStr = ""
@@ -42,28 +43,28 @@ class JsonProcess {
                 moveInfo.moveKind = movInsItem.moveKind
                 moveInfo.unitId = movInsItem.unitId
 
-                if (movInsItem.eFromPosition)
+                if (movInsItem.exFromPosition)
                     moveInfo.exFromPosition = new UnitPosition(
                             movInsItem.exFromPosition.area,
                             movInsItem.exFromPosition.bay,
                             movInsItem.exFromPosition.lay,
                             movInsItem.exFromPosition.tie
                     )
-                if (movInsItem.eToPosition)
+                if (movInsItem.exToPosition)
                     moveInfo.exToPosition = new UnitPosition(
                             movInsItem.exToPosition.area,
                             movInsItem.exToPosition.bay,
                             movInsItem.exToPosition.lay,
                             movInsItem.exToPosition.tie
                     )
-                if (movInsItem.aFromPosition)
+                if (movInsItem.acFromPosition)
                     moveInfo.acFromPosition = new UnitPosition(
                             movInsItem.acFromPosition.area,
                             movInsItem.acFromPosition.bay,
                             movInsItem.acFromPosition.lay,
                             movInsItem.acFromPosition.tie
                     )
-                if (movInsItem.aToPosition)
+                if (movInsItem.acToPosition)
                     moveInfo.acToPosition = new UnitPosition(
                             movInsItem.acToPosition.area,
                             movInsItem.acToPosition.bay,
@@ -124,8 +125,32 @@ class JsonProcess {
                     lay moveInfo.exToPosition.lay
                     tie moveInfo.exToPosition.tie
                 }
+                /*
+                本段代码用于生成测试的返回指令,在发送指令时无需生成
 
-//                dispatchTime moveInfo.dispatchTime
+                //实际提箱位置
+                acFromPosition {
+                    area moveInfo.exFromPosition.area
+                    bay moveInfo.exFromPosition.bay
+                    lay moveInfo.exFromPosition.lay
+                    tie moveInfo.exFromPosition.tie
+                }
+                //实际放箱位置
+                acToPosition {
+                    area moveInfo.exToPosition.area
+                    bay moveInfo.exToPosition.bay
+                    lay moveInfo.exToPosition.lay
+                    tie moveInfo.exToPosition.tie
+                }
+                fetchCHE ''
+                carryCHE ''
+                putCHE ''
+
+                fetchTime new Date().format(dateFormat)
+                carryTime new Date().format(dateFormat)
+                putTime new Date().format(dateFormat)
+
+                 */
             }
             InstructionList.add(instruction)
 

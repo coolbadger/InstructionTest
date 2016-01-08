@@ -2,6 +2,7 @@ package instruction;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.Method;
+import java.text.SimpleDateFormat;
 import java.util.*;
 
 /**
@@ -35,6 +36,7 @@ public class MoveInfo {
         String outStr = "";
         outStr += this.batchId + "|";
         outStr += this.unitId + "|";
+        outStr += this.state + "|";
         if (this.exFromPosition != null)
             outStr += this.exFromPosition.toString() + "|";
         else
@@ -51,7 +53,27 @@ public class MoveInfo {
             outStr += this.acToPosition.toString() + "|";
         else
             outStr += "--|";
+        outStr += fetchCHE + "|";
+        outStr += carryCHE + "|";
+        outStr += putCHE + "|";
 
+        SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        if (dispatchTime != null)
+            outStr += dateFormat.format(dispatchTime) + "|";
+        else
+            outStr += "--|";
+        if (dispatchTime != null)
+            outStr += dateFormat.format(fetchTime) + "|";
+        else
+            outStr += "--|";
+        if (dispatchTime != null)
+            outStr += dateFormat.format(carryTime) + "|";
+        else
+            outStr += "--|";
+        if (dispatchTime != null)
+            outStr += dateFormat.format(putTime) + "|";
+        else
+            outStr += "--|";
 
         return outStr;
     }
@@ -69,12 +91,13 @@ public class MoveInfo {
             return null;
         }
     }
+
     //获取属性列表
-    static public List getFiledsInfo(){
-        Field[] fields= MoveInfo.class.getDeclaredFields();
-        String[] fieldNames=new String[fields.length];
+    static public List getFiledsInfo() {
+        Field[] fields = MoveInfo.class.getDeclaredFields();
+        String[] fieldNames = new String[fields.length];
         List list = new ArrayList();
-        for(int i=0;i<fields.length;i++){
+        for (int i = 0; i < fields.length; i++) {
             list.add(fields[i].getName());
         }
         return list;
