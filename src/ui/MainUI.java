@@ -3,6 +3,7 @@ package ui;
 import instruction.LoadConfig;
 import instruction.MoveInfo;
 import instruction.UnitPosition;
+import main.GlobalData;
 
 import java.awt.BorderLayout;
 import java.awt.EventQueue;
@@ -158,6 +159,8 @@ public class MainUI extends JFrame {
 				}
 			}
 		}
+		//监听全局变量
+
 	}
 
 }
