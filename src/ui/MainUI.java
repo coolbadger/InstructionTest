@@ -5,15 +5,14 @@ import instruction.MoveInfo;
 import instruction.UnitPosition;
 import main.GlobalData;
 import main.IGlobalData;
+import main.SWInitSampleData;
 
-import java.awt.BorderLayout;
-import java.awt.EventQueue;
+import java.awt.*;
 
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
-import java.awt.Color;
 import java.lang.reflect.Field;
 import java.util.Date;
 import java.util.List;
@@ -80,6 +79,15 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 
+							setCursor(new Cursor(Cursor.WAIT_CURSOR));
+
+							new SWInitSampleData(){
+								@Override
+								protected void done() {
+									super.done();
+									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+								}
+							}.run();
 
 						}
 					});
@@ -146,21 +154,20 @@ public class MainUI extends JFrame {
 		GlobalData.addGlobalDataChangeListener(new IGlobalData() {
 			@Override
 			public void globalDataChanged() {
-				DefaultTableModel tableModel = (DefaultTableModel)tableWQL.getModel();
-				while (tableModel.getRowCount()>0){//清除表格中已有数据
+				DefaultTableModel tableModel = (DefaultTableModel) tableWQL.getModel();
+				while (tableModel.getRowCount() > 0) {//清除表格中已有数据
 					tableModel.removeRow(tableModel.getRowCount());
 				}
 				List<MoveInfo> sampleList = new LoadConfig().getInstructions();
-				for(MoveInfo moveInfo:sampleList){
+				for (MoveInfo moveInfo : sampleList) {
 					List<String> propertyList = MoveInfo.getFiledsInfo();//取出属性列表
 					Object[] rowData = new Object[propertyList.size()];
-					for (int i =0;i<propertyList.size();i++){
+					for (int i = 0; i < propertyList.size(); i++) {
 						String property = propertyList.get(i);
 						Object value = moveInfo.getFieldValueByName(property);//取出每个属性的值，判断
-						if(value instanceof UnitPosition){
+						if (value instanceof UnitPosition) {
 							rowData[i] = value.toString();
-						}
-						else{
+						} else {
 							rowData[i] = value;
 						}
 					}
