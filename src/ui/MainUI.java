@@ -118,6 +118,9 @@ public class MainUI extends JFrame {
 						if(tableWQL.getSelectedColumnCount()<1) {
 							JOptionPane.showMessageDialog(MainUI.this, "未选中任何指令！","错误", JOptionPane.ERROR_MESSAGE);
 						}
+						else {
+
+						}
 					}
 				});
 				this.panelNorth.add(this.buttonSendSelectedIns);
