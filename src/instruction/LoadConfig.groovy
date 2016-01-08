@@ -18,15 +18,19 @@ class LoadConfig {
     private Logger logger
 
     public LoadConfig() {
-        filePath = ""
+        filePath = "/Users/Badger/Project/项目/洋山/Code/InstructionTest/MoveEvent_Load.xls"
         file = new File(filePath)
-        workbook = new HSSFWorkbook(new FileInputStream(new POIFSFileSystem(file)))
+        workbook = new HSSFWorkbook(new FileInputStream(file))
         logger = UiGlobal.logger
+        moveInfoList = new ArrayList<MoveInfo>()
     }
 
     public List<MoveInfo> getInstructions() {
+        //暂时取固定批次号
+        String batchStr = "batch001"
         int sheetCount = workbook.size()
         int currentSheet = 1
+        int itemIndex = 0
         workbook.each { sheet ->
             logger.info("读取Sheet(" + currentSheet + "/" + sheetCount + "):" + sheet.sheetName)
             logger.info("一共有" + sheet.lastRowNum + "行数据")
@@ -38,31 +42,34 @@ class LoadConfig {
 
                 if (index == 0) {//检查标题行
                     logger.info("检查标题行......")
-                    if (stripe.call(getCellVal(row.getCell(0))) != '提单号') read_correct = false
-                    if (stripe.call(getCellVal(row.getCell(1))) != '箱号') read_correct = false
-                    if (stripe.call(getCellVal(row.getCell(2))) != '箱长') read_correct = false
-                    if (stripe.call(getCellVal(row.getCell(3))) != '箱型') read_correct = false
+                    if (stripe.call(getCellVal(row.getCell(0))) != 'Move Kind') read_correct = false
+                    if (stripe.call(getCellVal(row.getCell(1))) != 'Unit Category') read_correct = false
+                    if (stripe.call(getCellVal(row.getCell(2))) != 'Unit Nbr') read_correct = false
+                    if (stripe.call(getCellVal(row.getCell(3))) != 'CHE') read_correct = false
+                    if (stripe.call(getCellVal(row.getCell(4))) != 'Unit Length') read_correct = false
+                    if (stripe.call(getCellVal(row.getCell(5))) != 'From Position') read_correct = false
+                    if (stripe.call(getCellVal(row.getCell(6))) != 'To Position') read_correct = false
 
                     if (read_correct == false) {
-                        logger.info("Excel文件列名错误！应为：提单号 箱号 箱长 箱型")
+                        logger.info("Excel文件列名错误！")
+                    } else {
+                        logger.info("标题行列名正确,开始处理数据……")
                     }
+                } else {
+                    newMoveInfo.setBatchId(batchStr)
+                    newMoveInfo.setMoveId(++itemIndex)
+                    newMoveInfo.setMoveKind(stripe.call(getCellVal(row.getCell(0))))
+                    newMoveInfo.setUnitId(stripe.call(getCellVal(row.getCell(2))))
+                    newMoveInfo.setUnitLength(stripe.call(getCellVal(row.getCell(4))))
+                    newMoveInfo.seteFromPosition(new UnitPosition(stripe.call(getCellVal(row.getCell(5)))))
+                    newMoveInfo.seteToPosition(new UnitPosition(stripe.call(getCellVal(row.getCell(6)))))
+                    newMoveInfo.setState(0)
+                    moveInfoList.add(newMoveInfo)
                 }
-
-                newMoveInfo.setBatchId(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setMoveId(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setMoveKind(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setFetchCHE(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setFetchTime(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setCarryCHE(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setCarryTime(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setPutCHE(stripe.call(getCellVal(row.getCell(0))))
-                newMoveInfo.setPutTime(stripe.call(getCellVal(row.getCell(0))))
-
-                moveInfoList.add(newMoveInfo)
             }
         }
 
-        return null
+        return this.moveInfoList
     }
 
     def getCellVal(HSSFCell cell) {

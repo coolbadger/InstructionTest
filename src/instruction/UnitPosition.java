@@ -23,14 +23,18 @@ public class UnitPosition {
     public UnitPosition() {
     }
 
+    //根据船上和场地两种位置信息格式,处理字符串
     public UnitPosition(String positionStr) {
         int pointIndex = positionStr.indexOf(".", positionStr.length() - 3);
+
+        //统一长度格式,lay插入"0",层替换"."
         if (pointIndex > 3) {
             String newStr = positionStr.substring(0, pointIndex - 1) + "0" + positionStr.substring(pointIndex - 1);
             positionStr = newStr.replace(".", "0");
         }
 
         if (positionStr.length() > 7) {
+            //如果是船上位置,删掉多余的"-"
             if (positionStr.charAt(positionStr.length() - 7) == '-')
                 this.area = positionStr.substring(0, positionStr.length() - 7);
             else

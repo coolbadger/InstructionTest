@@ -11,6 +11,8 @@ public class MoveInfo {
     private String moveKind;                //作业类型
     private String unitId;                  //箱编号
 
+    private String unitLength;              //箱长
+
     private UnitPosition eFromPosition;      //计划提箱位置
     private UnitPosition eToPosition;       //计划放箱位置
     private UnitPosition aFromPosition;     //实际提箱位置
@@ -26,6 +28,15 @@ public class MoveInfo {
     private Date putTime;                   //Put确认时间
 
     private int state;                      //状态,未发送,作业中,已完成
+
+
+    public String getUnitLength() {
+        return unitLength;
+    }
+
+    public void setUnitLength(String unitLength) {
+        this.unitLength = unitLength;
+    }
 
     public String getBatchId() {
         return batchId;
