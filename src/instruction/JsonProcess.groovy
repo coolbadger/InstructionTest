@@ -2,7 +2,6 @@ package instruction
 
 import demo.Instruction
 import groovy.json.JsonBuilder
-import groovy.json.JsonOutput
 import groovy.json.JsonSlurper
 
 /**
@@ -44,32 +43,32 @@ class JsonProcess {
                 moveInfo.unitId = movInsItem.unitId
 
                 if (movInsItem.eFromPosition)
-                    moveInfo.eFromPosition = new UnitPosition(
-                            movInsItem.eFromPosition.area,
-                            movInsItem.eFromPosition.bay,
-                            movInsItem.eFromPosition.lay,
-                            movInsItem.eFromPosition.tie
+                    moveInfo.exFromPosition = new UnitPosition(
+                            movInsItem.exFromPosition.area,
+                            movInsItem.exFromPosition.bay,
+                            movInsItem.exFromPosition.lay,
+                            movInsItem.exFromPosition.tie
                     )
                 if (movInsItem.eToPosition)
-                    moveInfo.eToPosition = new UnitPosition(
-                            movInsItem.eToPosition.area,
-                            movInsItem.eToPosition.bay,
-                            movInsItem.eToPosition.lay,
-                            movInsItem.eToPosition.tie
+                    moveInfo.exToPosition = new UnitPosition(
+                            movInsItem.exToPosition.area,
+                            movInsItem.exToPosition.bay,
+                            movInsItem.exToPosition.lay,
+                            movInsItem.exToPosition.tie
                     )
                 if (movInsItem.aFromPosition)
-                    moveInfo.aFromPosition = new UnitPosition(
-                            movInsItem.aFromPosition.area,
-                            movInsItem.aFromPosition.bay,
-                            movInsItem.aFromPosition.lay,
-                            movInsItem.aFromPosition.tie
+                    moveInfo.acFromPosition = new UnitPosition(
+                            movInsItem.acFromPosition.area,
+                            movInsItem.acFromPosition.bay,
+                            movInsItem.acFromPosition.lay,
+                            movInsItem.acFromPosition.tie
                     )
                 if (movInsItem.aToPosition)
-                    moveInfo.aToPosition = new UnitPosition(
-                            movInsItem.aToPosition.area,
-                            movInsItem.aToPosition.bay,
-                            movInsItem.aToPosition.lay,
-                            movInsItem.aToPosition.tie
+                    moveInfo.acToPosition = new UnitPosition(
+                            movInsItem.acToPosition.area,
+                            movInsItem.acToPosition.bay,
+                            movInsItem.acToPosition.lay,
+                            movInsItem.acToPosition.tie
                     )
                 moveInfo.fetchCHE = movInsItem.fetchCHE
                 moveInfo.carryCHE = movInsItem.carryCHE
@@ -112,18 +111,18 @@ class JsonProcess {
                 unitLength moveInfo.unitLength
 
                 //预计提箱位置
-                eFromPosition {
-                    area moveInfo.eFromPosition.area
-                    bay moveInfo.eFromPosition.bay
-                    lay moveInfo.eFromPosition.lay
-                    tie moveInfo.eFromPosition.tie
+                exFromPosition {
+                    area moveInfo.exFromPosition.area
+                    bay moveInfo.exFromPosition.bay
+                    lay moveInfo.exFromPosition.lay
+                    tie moveInfo.exFromPosition.tie
                 }
                 //预计放箱位置
-                eToPosition {
-                    area moveInfo.eToPosition.area
-                    bay moveInfo.eToPosition.bay
-                    lay moveInfo.eToPosition.lay
-                    tie moveInfo.eToPosition.tie
+                exToPosition {
+                    area moveInfo.exToPosition.area
+                    bay moveInfo.exToPosition.bay
+                    lay moveInfo.exToPosition.lay
+                    tie moveInfo.exToPosition.tie
                 }
 
 //                dispatchTime moveInfo.dispatchTime

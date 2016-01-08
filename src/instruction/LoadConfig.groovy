@@ -1,11 +1,9 @@
 package instruction
 
-import main.LogListener
 import main.Logger
 import main.UiGlobal
 import org.apache.poi.hssf.usermodel.HSSFCell
 import org.apache.poi.hssf.usermodel.HSSFWorkbook
-import org.apache.poi.poifs.filesystem.POIFSFileSystem
 
 /**
  * Created by Badger on 16/1/8.
@@ -63,8 +61,8 @@ class LoadConfig {
                     newMoveInfo.setMoveKind(stripe.call(getCellVal(row.getCell(0))))
                     newMoveInfo.setUnitId(stripe.call(getCellVal(row.getCell(2))))
                     newMoveInfo.setUnitLength(stripe.call(getCellVal(row.getCell(4))))
-                    newMoveInfo.seteFromPosition(new UnitPosition(stripe.call(getCellVal(row.getCell(5)))))
-                    newMoveInfo.seteToPosition(new UnitPosition(stripe.call(getCellVal(row.getCell(6)))))
+                    newMoveInfo.setExFromPosition(new UnitPosition(stripe.call(getCellVal(row.getCell(5)))))
+                    newMoveInfo.setExToPosition(new UnitPosition(stripe.call(getCellVal(row.getCell(6)))))
                     newMoveInfo.setState(0)
                     moveInfoList.add(newMoveInfo)
                 }
