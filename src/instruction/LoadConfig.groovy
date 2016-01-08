@@ -33,7 +33,7 @@ class LoadConfig {
         int itemIndex = 0
         workbook.each { sheet ->
             logger.info("读取Sheet(" + currentSheet + "/" + sheetCount + "):" + sheet.sheetName)
-            logger.info("一共有" + sheet.lastRowNum + "行数据")
+//            logger.info("一共有" + sheet.lastRowNum + "行数据")
 
             //处理每一行数据
             sheet.eachWithIndex { row, index ->
@@ -55,9 +55,10 @@ class LoadConfig {
                     } else {
                         logger.info("标题行列名正确,开始处理数据……")
                     }
-                } else {
+                } else if (stripe.call(getCellVal(row.getCell(0)))) {
+                    itemIndex++
                     newMoveInfo.setBatchId(batchStr)
-                    newMoveInfo.setMoveId(++itemIndex)
+                    newMoveInfo.setMoveId(itemIndex)
                     newMoveInfo.setMoveKind(stripe.call(getCellVal(row.getCell(0))))
                     newMoveInfo.setUnitId(stripe.call(getCellVal(row.getCell(2))))
                     newMoveInfo.setUnitLength(stripe.call(getCellVal(row.getCell(4))))
@@ -68,6 +69,7 @@ class LoadConfig {
                 }
             }
         }
+        logger.info("一共有" + itemIndex + "条有效数据")
 
         return this.moveInfoList
     }

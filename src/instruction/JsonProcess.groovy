@@ -92,10 +92,11 @@ class JsonProcess {
     //Json字符串编码
     public String getJsonStr(List<MoveInfo> moveInfoList) {
         def builder = new JsonBuilder()
-        def instruction = new JsonBuilder()
+        def instruction = null
         List InstructionList = new ArrayList()
         //生成所有指令的Json
-        for (MoveInfo moveInfo in moveInfoList) {
+        moveInfoList.each { moveInfo ->
+            instruction = new JsonBuilder()
             instruction {
                 batchId moveInfo.batchId
                 moveId moveInfo.moveId
@@ -121,6 +122,7 @@ class JsonProcess {
 //                dispatchTime moveInfo.dispatchTime
             }
             InstructionList.add(instruction)
+
         }
         //打包Json指令
         builder {
