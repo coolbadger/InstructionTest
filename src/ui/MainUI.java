@@ -3,9 +3,7 @@ package ui;
 import instruction.LoadConfig;
 import instruction.MoveInfo;
 import instruction.UnitPosition;
-import main.GlobalData;
-import main.IGlobalData;
-import main.SWInitSampleData;
+import main.*;
 
 import java.awt.*;
 
@@ -13,7 +11,10 @@ import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.io.File;
+import java.io.IOException;
 import java.lang.reflect.Field;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import javax.swing.border.TitledBorder;
@@ -32,6 +33,7 @@ public class MainUI extends JFrame {
 	private JTable tableWQL;
 	private JScrollPane scrollPane;
 	private JButton buttonSendSelectedIns;
+	private JButton buttonReceiveIns;
 
 	/**
 	 * Launch the application.
@@ -79,13 +81,15 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 
-							setCursor(new Cursor(Cursor.WAIT_CURSOR));
+							System.out.println("菜单触发导入案例数据");
 
-							new SWInitSampleData(){
+							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标正忙
+
+							new SWInitSampleData(){//执行SwingWorker
 								@Override
 								protected void done() {
 									super.done();
-									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));
+									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 								}
 							}.run();
 
@@ -107,15 +111,82 @@ public class MainUI extends JFrame {
 				this.buttonSendSelectedIns.addActionListener(new ActionListener() {
 					@Override
 					public void actionPerformed(ActionEvent e) {
-						if(tableWQL.getSelectedColumnCount()<1) {
-							JOptionPane.showMessageDialog(MainUI.this, "未选中任何指令！","错误", JOptionPane.ERROR_MESSAGE);
-						}
-						else {
+						if (tableWQL.getSelectedRowCount() < 1) {
+							JOptionPane.showMessageDialog(MainUI.this, "未选中任何指令！", "错误", JOptionPane.ERROR_MESSAGE);
+						} else {
+							boolean hasNoSendable = false;//是否有不能发送的指令
+							List<String> gkeyList = new ArrayList<String>();//被选中的指令的Gkey
+							for (int i : tableWQL.getSelectedRows()) {//遍历选中的行
+								String gkey = (String) tableWQL.getValueAt(i, tableWQL.getColumn("gkey").getModelIndex());
+								int currentState = (Integer) tableWQL.getValueAt(i, tableWQL.getColumn("state").getModelIndex());
+								System.out.println("选中:" + gkey + ":" + currentState);
+								if (currentState != 0) {
+									hasNoSendable = true;
+								}
+								gkeyList.add(gkey);
+							}
+							if (hasNoSendable) {
+								JOptionPane.showMessageDialog(MainUI.this, "含有已发送的指令!", "错误", JOptionPane.ERROR_MESSAGE);
+							} else {
+								//执行发送线程
+								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标正忙
+
+								SWSendData swSendData = new SWSendData() {
+									@Override
+									protected void done() {
+										super.done();
+										setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+
+										int willOpen = JOptionPane.showConfirmDialog(MainUI.this, "已写入在程序根目录下WorkInstructionSend.json，是否打开？", "已写入", JOptionPane.YES_NO_OPTION);
+										if (willOpen == JOptionPane.YES_OPTION) {
+											try {
+												Desktop.getDesktop().open(new File("WorkInstructionSend.json"));
+											} catch (IOException e1) {
+												e1.printStackTrace();
+											}
+										}
+
+									}
+								};
+								swSendData.gkeyList = gkeyList;//设置传入参数
+								swSendData.run();
+							}
 
 						}
 					}
 				});
 				this.panelNorth.add(this.buttonSendSelectedIns);
+
+				this.buttonReceiveIns = new JButton("接受返回指令");
+				this.buttonReceiveIns.addActionListener(new ActionListener() {
+					@Override
+					public void actionPerformed(ActionEvent e) {
+						JFileChooser fileChooser = new JFileChooser();
+						fileChooser.setDialogTitle("请选择文件（UTF-8编码）");
+						fileChooser.setDialogType(JFileChooser.FILES_ONLY);
+						int sel = fileChooser.showOpenDialog(MainUI.this);
+						if(sel == JFileChooser.APPROVE_OPTION){
+							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标正忙
+							//执行接收线程
+							File file = fileChooser.getSelectedFile();
+							System.out.println(file.getName());
+							final SWReceiveData swReceiveData = new SWReceiveData(){
+								@Override
+								protected void done() {
+									super.done();
+									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+								}
+							};
+							swReceiveData.inFile = file;
+							swReceiveData.run();
+							//判断执行结果
+							if(!swReceiveData.noError){
+								JOptionPane.showMessageDialog(MainUI.this, "接受失败！\n"+swReceiveData.result, "错误", JOptionPane.ERROR_MESSAGE);
+							}
+						}
+					}
+				});
+				this.panelNorth.add(this.buttonReceiveIns);
 
 
 			}
@@ -154,12 +225,12 @@ public class MainUI extends JFrame {
 		GlobalData.addGlobalDataChangeListener(new IGlobalData() {
 			@Override
 			public void globalDataChanged() {
+				System.out.println("检测到全局数据变化，更新表格");
 				DefaultTableModel tableModel = (DefaultTableModel) tableWQL.getModel();
 				while (tableModel.getRowCount() > 0) {//清除表格中已有数据
-					tableModel.removeRow(tableModel.getRowCount());
+					tableModel.removeRow(tableModel.getRowCount() - 1);
 				}
-				List<MoveInfo> sampleList = new LoadConfig().getInstructions();
-				for (MoveInfo moveInfo : sampleList) {
+				for (MoveInfo moveInfo : GlobalData.getGlobalMoveinfoMap().values()) {
 					List<String> propertyList = MoveInfo.getFiledsInfo();//取出属性列表
 					Object[] rowData = new Object[propertyList.size()];
 					for (int i = 0; i < propertyList.size(); i++) {

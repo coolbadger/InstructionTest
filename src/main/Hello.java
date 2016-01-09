@@ -13,7 +13,7 @@ public class Hello {
 
         String outStr = "V-LH526002-030002";
 //        outStr = new JsonProcess().getJsonStr(null);
-        new JsonProcess().getMoveInfos(Instruction.receiveJsonDemo);
+//        new JsonProcess().getMoveInfos(Instruction.receiveJsonDemo);
 //        System.out.println(new UnitPosition(outStr).toString());
         outStr = new JsonProcess().getJsonStr(new LoadConfig().getInstructions());
         System.out.println(outStr);

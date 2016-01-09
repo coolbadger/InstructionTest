@@ -21,7 +21,7 @@ class JsonProcess {
     //Json字符串解析编码
     public List<MoveInfo> getMoveInfos(String jsonStr) {
         //用Demo测试
-        jsonStr = Instruction.receiveJsonDemo
+//        jsonStr = Instruction.receiveJsonDemo
 
         def root = new JsonSlurper().parseText(jsonStr)
 
@@ -38,10 +38,13 @@ class JsonProcess {
             MoveInfo moveInfo = new MoveInfo()
             //尝试解析Json
             try {
+                moveInfo.gkey = movInsItem.gkey
                 moveInfo.batchId = movInsItem.batchId
                 moveInfo.moveId = movInsItem.moveId
                 moveInfo.moveKind = movInsItem.moveKind
                 moveInfo.unitId = movInsItem.unitId
+                moveInfo.unitLength = movInsItem.unitLength
+                moveInfo.state = movInsItem.state
 
                 if (movInsItem.exFromPosition)
                     moveInfo.exFromPosition = new UnitPosition(
@@ -104,6 +107,7 @@ class JsonProcess {
         moveInfoList.each { moveInfo ->
             instruction = new JsonBuilder()
             instruction {
+                gkey moveInfo.gkey
                 batchId moveInfo.batchId
                 moveId moveInfo.moveId
                 moveKind moveInfo.moveKind

@@ -56,6 +56,7 @@ class LoadConfig {
                     }
                 } else if (stripe.call(getCellVal(row.getCell(0)))) {
                     itemIndex++
+                    newMoveInfo.setGkey(batchStr+"@"+itemIndex)
                     newMoveInfo.setBatchId(batchStr)
                     newMoveInfo.setMoveId(itemIndex)
                     newMoveInfo.setMoveKind(stripe.call(getCellVal(row.getCell(0))))

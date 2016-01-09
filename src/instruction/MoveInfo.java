@@ -9,6 +9,9 @@ import java.util.*;
  * Created by Badger on 16/1/7.
  */
 public class MoveInfo {
+
+
+    private String gkey;                    //唯一编号
     private String batchId;                 //作业批次号
     private int moveId;                     //作业编号
     private String moveKind;                //作业类型
@@ -30,7 +33,7 @@ public class MoveInfo {
     private Date carryTime;                 //Carry确认时间
     private Date putTime;                   //Put确认时间
 
-    private int state;                      //状态,未发送,作业中,已完成
+    private int state;                      //状态,未发送(0),作业中(1),已完成(2)
 
     public String toString() {
         String outStr = "";
@@ -175,6 +178,13 @@ public class MoveInfo {
         this.acToPosition = acToPosition;
     }
 
+    public String getGkey() {
+        return gkey;
+    }
+
+    public void setGkey(String gkey) {
+        this.gkey = gkey;
+    }
     public String getFetchCHE() {
         return fetchCHE;
     }
