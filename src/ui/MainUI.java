@@ -68,13 +68,13 @@ public class MainUI extends JFrame {
 				this.menu = new JMenu("文件");
 				this.menuBar.add(this.menu);
 				{
-					this.menuItemExit = new JMenuItem("退出");
-					this.menuItemExit.addActionListener(new ActionListener() {
-						public void actionPerformed(ActionEvent e) {
-							System.exit(NORMAL);
-						}
-					});
-					this.menu.add(this.menuItemExit);
+//					this.menuItemExit = new JMenuItem("退出");
+//					this.menuItemExit.addActionListener(new ActionListener() {
+//						public void actionPerformed(ActionEvent e) {
+//							System.exit(NORMAL);
+//						}
+//					});
+//					this.menu.add(this.menuItemExit);
 
 					this.menuItemImportSampleData = new JMenuItem("导入案例数据");
 					this.menuItemImportSampleData.addActionListener(new ActionListener() {
