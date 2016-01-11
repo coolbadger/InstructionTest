@@ -14,7 +14,9 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 import java.io.IOException;
 import java.lang.reflect.Field;
+import java.text.Collator;
 import java.util.ArrayList;
+import java.util.Comparator;
 import java.util.Date;
 import java.util.List;
 import javax.swing.border.TitledBorder;
@@ -214,10 +216,36 @@ public class MainUI extends JFrame {
 
 
 					this.tableWQL.setModel(tableModel);
-					this.tableWQL.setRowSorter(new TableRowSorter(tableModel));
-
-
-					
+//					this.tableWQL.setRowSorter(new TableRowSorter(tableModel));
+					//针对特殊的列设置排序器
+					TableRowSorter tableRowSorter = new TableRowSorter(tableModel);
+					tableRowSorter.setComparator(tableWQL.getColumn("gkey").getModelIndex(), new Comparator<String>() {
+						@Override
+						public int compare(String o1, String o2) {
+							//先以@为界分裂
+							String o1s = o1.split("@")[0];
+							String o2s = o2.split("@")[0];
+							String o1d = o1.split("@")[1];
+							String o2d = o2.split("@")[1];
+							System.out.println(o1s + " " + o1d);
+							System.out.println(o2s + " " + o2d);
+							if (o1s.equals(o2s)) {//前半截相同,后半截处理为Integer，比对
+								System.out.println("前半截相同,后半截处理为Integer，比对");
+								int o1i = Integer.valueOf(o1d);
+								int o2i = Integer.valueOf(o2d);
+								return Integer.compare(o1i, o2i);//对比后半截
+							} else {
+								return Collator.getInstance().compare(o1s, o2s);//对比前半截
+							}
+						}
+					});
+					tableWQL.setRowSorter(tableRowSorter);
+					//设置默认排序
+					RowSorter.SortKey sortKey = new RowSorter.SortKey(tableWQL.getColumn("gkey").getModelIndex(),SortOrder.ASCENDING);
+					List<RowSorter.SortKey> sortKeyList = new ArrayList<RowSorter.SortKey>();
+					sortKeyList.add(sortKey);
+					tableRowSorter.setSortKeys(sortKeyList);
+					tableRowSorter.setSortsOnUpdates(true);
 				}
 			}
 		}
@@ -244,6 +272,8 @@ public class MainUI extends JFrame {
 					}
 					tableModel.addRow(rowData);
 				}
+
+
 			}
 		});
 
