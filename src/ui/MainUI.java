@@ -28,7 +28,8 @@ public class MainUI extends JFrame {
 	private JPanel contentPane;
 	private JMenuBar menuBar;
 	private JMenu menu;
-	private JMenuItem menuItemExit;
+	private JMenu menuTest;
+	private JMenuItem menuItemTest;
 	private JMenuItem menuItemImportSampleData;
 	private JPanel panelNorth;
 	private JPanel panelCenter;
@@ -70,13 +71,6 @@ public class MainUI extends JFrame {
 				this.menu = new JMenu("文件");
 				this.menuBar.add(this.menu);
 				{
-//					this.menuItemExit = new JMenuItem("退出");
-//					this.menuItemExit.addActionListener(new ActionListener() {
-//						public void actionPerformed(ActionEvent e) {
-//							System.exit(NORMAL);
-//						}
-//					});
-//					this.menu.add(this.menuItemExit);
 
 					this.menuItemImportSampleData = new JMenuItem("导入案例数据");
 					this.menuItemImportSampleData.addActionListener(new ActionListener() {
@@ -98,6 +92,19 @@ public class MainUI extends JFrame {
 						}
 					});
 					this.menu.add(this.menuItemImportSampleData);
+				}
+				this.menuTest = new JMenu("测试");
+				this.menuBar.add(this.menuTest);
+				{
+					this.menuItemTest = new JMenuItem("打开测试窗口");
+					this.menuItemTest.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							TestFrame testFrame = new TestFrame();
+							testFrame.setVisible(true);
+						}
+					});
+					this.menuTest.add(this.menuItemTest);
 				}
 			}
 		}
