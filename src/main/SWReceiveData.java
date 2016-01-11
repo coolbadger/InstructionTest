@@ -49,9 +49,17 @@ public class SWReceiveData extends SwingWorker {//接收返回的数据
 
                     //判断Gkey
                     for (MoveInfo moveInfo : moveInfoList){
-                        if(GlobalData.getGlobalMoveinfoMap().keySet().contains(moveInfo.getGkey())){
+                        MoveInfo moveInfo1 = GlobalData.getGlobalMoveinfoMap().get(moveInfo.getGkey());
+                        if (moveInfo1==null){
                             noError = false;
-                            result = "含有非法Gkey:" + moveInfo.getGkey();
+                            result = "接收到的指令有无效Gkey:"+ moveInfo.getGkey();
+                        }
+                        else if(moveInfo1.getState() != 1){
+                            noError = false;
+                            result = "接收到的指令Gkey:"+ moveInfo.getGkey() + "状态不匹配！";
+                        }
+                        else {
+
                         }
                     }
 
@@ -60,8 +68,6 @@ public class SWReceiveData extends SwingWorker {//接收返回的数据
                         for (MoveInfo moveInfo : moveInfoList) {
                             String gkey = moveInfo.getGkey();
                             GlobalData.addOrUpdateMoveInfo(moveInfo);
-                            noError = false;
-                            result = "Bad";
                         }
                     }
 
