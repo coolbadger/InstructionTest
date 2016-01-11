@@ -46,10 +46,25 @@ public class SWReceiveData extends SwingWorker {//接收返回的数据
                     noError = false;
                     result = "解析失败！";
                 }else{
-                    for (MoveInfo moveInfo : moveInfoList) {
-                        String gkey = moveInfo.getGkey();
-                        GlobalData.addOrUpdateMoveInfo(moveInfo);
+
+                    //判断Gkey
+                    for (MoveInfo moveInfo : moveInfoList){
+                        if(GlobalData.getGlobalMoveinfoMap().keySet().contains(moveInfo.getGkey())){
+                            noError = false;
+                            result = "含有非法Gkey:" + moveInfo.getGkey();
+                        }
                     }
+
+                    //
+                    if(noError){
+                        for (MoveInfo moveInfo : moveInfoList) {
+                            String gkey = moveInfo.getGkey();
+                            GlobalData.addOrUpdateMoveInfo(moveInfo);
+                            noError = false;
+                            result = "Bad";
+                        }
+                    }
+
                 }
 
             } catch (Exception e) {
