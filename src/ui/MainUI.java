@@ -45,7 +45,7 @@ public class MainUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainUI frame = new MainUI();
+					MainUI frame = new MainUI();//aaaa
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
