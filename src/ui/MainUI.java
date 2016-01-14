@@ -22,14 +22,17 @@ import java.util.List;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableRowSorter;
+import javax.swing.filechooser.FileFilter;
 
 public class MainUI extends JFrame {
 
 	private JPanel contentPane;
 	private JMenuBar menuBar;
-	private JMenu menu;
-	private JMenu menuTest;
-	private JMenuItem menuItemTest;
+	private JMenu menu1,menu2,menu3,menu4;
+	private JMenuItem menuItemExit;
+	private JMenuItem voyage,shipstructure,crane,hatchinfo,hatchwork,container,containerarea,others;
+	private JMenuItem groups,prestowage;
+	private JMenuItem cwp,stowage;
 	private JMenuItem menuItemImportSampleData;
 	private JPanel panelNorth;
 	private JPanel panelCenter;
@@ -45,7 +48,7 @@ public class MainUI extends JFrame {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					MainUI frame = new MainUI();//aaaa
+					MainUI frame = new MainUI();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -60,6 +63,38 @@ public class MainUI extends JFrame {
 	public MainUI() {
 		initComponents();
 	}
+
+    private void choosefile(){
+        JFileChooser fileChooser = new JFileChooser();
+        fileChooser.setDialogTitle("请选择文件（UTF-8编码）");
+        fileChooser.setCurrentDirectory(new File("."));
+        fileChooser.setAcceptAllFileFilterUsed(false);
+        final String[][] fileENames = {{".json", "json数据"}};
+        fileChooser.addChoosableFileFilter(new FileFilter() {
+            public boolean accept(File file) {
+                return true;
+            }
+
+            public String getDescription() {
+                return "所有文件(*.*)";
+            }
+        });
+        for (final String[] fileEName : fileENames) {
+            fileChooser.setFileFilter(new javax.swing.filechooser.FileFilter() {
+                public boolean accept(File file) {
+                    if (file.getName().endsWith(fileEName[0]) || file.isDirectory()) {
+                        return true;
+                    }
+                    return false;
+                }
+                public String getDescription() {
+                    return fileEName[1];
+                }
+            });
+        }
+        fileChooser.showDialog(null, null);
+    }
+
 	private void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 1000, 600);
@@ -68,11 +103,114 @@ public class MainUI extends JFrame {
 			this.menuBar.setBackground(Color.LIGHT_GRAY);
 			setJMenuBar(this.menuBar);
 			{
-				this.menu = new JMenu("文件");
-				this.menuBar.add(this.menu);
+				this.menu1 = new JMenu("导入");
+				this.menuBar.add(this.menu1);
 				{
+					this.voyage = new JMenuItem("航次");
+					this.voyage.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							choosefile();
+						}
+					});
+					this.shipstructure = new JMenuItem("船舶结构");
+					this.shipstructure.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							choosefile();
+						}
+					});
+					this.crane = new JMenuItem("桥机");
+					this.crane.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							choosefile();
+						}
+					});
+					this.hatchinfo = new JMenuItem("船舱信息");
+					this.hatchinfo.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							choosefile();
+						}
+					});
+                    this.hatchwork = new JMenuItem("舱内作业");
+                    this.hatchwork.addActionListener(new ActionListener() {
+                        @Override
+                        public void actionPerformed(ActionEvent e) {
+                            choosefile();
+                        }
+                    });
+					this.container = new JMenuItem("在场箱");
+					this.container.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							choosefile();
+						}
+					});
+					this.containerarea = new JMenuItem("箱区信息");
+					this.containerarea.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							choosefile();
+						}
+					});
+					this.others = new JMenuItem("其他信息");
+					this.others.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							choosefile();
+						}
+					});
+					this.menu1.add(this.voyage);
+					this.menu1.add(this.shipstructure);
+					this.menu1.add(crane);
+                    this.menu1.add(hatchinfo);
+                    this.menu1.add(hatchwork);
+					this.menu1.add(container);
+					this.menu1.add(containerarea);
+					this.menu1.add(others);
+				}
 
-					this.menuItemImportSampleData = new JMenuItem("导入案例数据");
+				this.menu2 = new JMenu("生成");
+				this.menuBar.add(this.menu2);
+				{
+					this.groups = new JMenuItem("属性组");
+					/*
+					this.groups.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							GroupFrame groupFrame = new GroupFrame();
+							groupFrame.setVisible(true);
+						}
+					});
+					*/
+					this.prestowage = new JMenuItem("预配图");
+					this.menu2.add(this.groups);
+					this.menu2.add(this.prestowage);
+				}
+
+				this.menu3 = new JMenu("预览");
+				this.menuBar.add(this.menu3);
+				{
+					this.cwp = new JMenuItem("cwp计划");
+					this.stowage = new JMenuItem("自动配载");
+					this.menu3.add(this.cwp);
+					this.menu3.add(this.stowage);
+				}
+
+				this.menu4 = new JMenu("操作");
+				this.menuBar.add(this.menu4);
+				{
+//					this.menuItemExit = new JMenuItem("退出");
+//					this.menuItemExit.addActionListener(new ActionListener() {
+//						public void actionPerformed(ActionEvent e) {
+//							System.exit(NORMAL);
+//						}
+//					});
+//					this.menu.add(this.menuItemExit);
+
+					this.menuItemImportSampleData = new JMenuItem("装船");
 					this.menuItemImportSampleData.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
@@ -91,20 +229,7 @@ public class MainUI extends JFrame {
 
 						}
 					});
-					this.menu.add(this.menuItemImportSampleData);
-				}
-				this.menuTest = new JMenu("测试");
-				this.menuBar.add(this.menuTest);
-				{
-					this.menuItemTest = new JMenuItem("打开测试窗口");
-					this.menuItemTest.addActionListener(new ActionListener() {
-						@Override
-						public void actionPerformed(ActionEvent e) {
-							TestFrame testFrame = new TestFrame();
-							testFrame.setVisible(true);
-						}
-					});
-					this.menuTest.add(this.menuItemTest);
+					this.menu4.add(this.menuItemImportSampleData);
 				}
 			}
 		}
@@ -173,6 +298,7 @@ public class MainUI extends JFrame {
 						JFileChooser fileChooser = new JFileChooser();
 						fileChooser.setDialogTitle("请选择文件（UTF-8编码）");
 						fileChooser.setDialogType(JFileChooser.FILES_ONLY);
+						fileChooser.setCurrentDirectory(new File("."));
 						int sel = fileChooser.showOpenDialog(MainUI.this);
 						if(sel == JFileChooser.APPROVE_OPTION){
 							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标正忙
@@ -246,6 +372,7 @@ public class MainUI extends JFrame {
 							}
 						}
 					});
+					//tableRowSorter.setComparator();
 					tableWQL.setRowSorter(tableRowSorter);
 					//设置默认排序
 					RowSorter.SortKey sortKey = new RowSorter.SortKey(tableWQL.getColumn("gkey").getModelIndex(),SortOrder.ASCENDING);
