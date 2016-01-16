@@ -1,8 +1,11 @@
 package ui;
 
+import importData.ImportData;
+import importData.VesselStructureInfoProcess;
 import instruction.MoveInfo;
 import instruction.UnitPosition;
 import main.*;
+import utils.FileUtil;
 
 import java.awt.*;
 
@@ -122,7 +125,13 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							File file= choosefile();
-							System.out.println(file.getName());
+							//System.out.println(file.getName());
+							if(!".".equals(file.getName())) {
+								System.out.println("打开船舶结构文件："+file.getName());
+								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
+								//将字符串解析,将船舶结构数据保存到全局变量里面
+								ImportData.vesselStructureInfo = VesselStructureInfoProcess.getVesselStructureInfo(str.toString());
+							}
 						}
 					});
 					this.crane = new JMenuItem("桥机");
