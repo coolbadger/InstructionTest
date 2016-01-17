@@ -16,6 +16,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
 
     private static ArrayList<Integer[]>  allocation = new ArrayList<Integer[]>();
     private static Integer[] tier={2,4,6,8,10,12,14,16,18,20,82,84,86,88,90,92,94,96,98};
+    private static Integer[] moveorderchange ={5,3,4,0,3,-3,2,-6,1,-9};
     private static Integer ROWnum = 10;
     private static ArrayList<PreStowageInfo> preStowageInfoArrayList = new ArrayList<PreStowageInfo>();
 
@@ -70,6 +71,9 @@ public class SWGeneratePrestowageData extends SwingWorker {
                             String GROUPID="G1";      //属性组
                             Integer WEIGHT=25;         //重量
                             Integer MOVEORDER=cnt++;   //移动顺序
+                            if (VTRTIERNO>=82){
+                                MOVEORDER = MOVEORDER + moveorderchange[k-1];
+                            }
                             System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
                             newPrestowageInfo = new PreStowageInfo();
                             newPrestowageInfo.setVHT_ID(VHTID);
@@ -107,6 +111,9 @@ public class SWGeneratePrestowageData extends SwingWorker {
                     String GROUPID="G2";      //属性组
                     Integer WEIGHT=25;         //重量
                     Integer MOVEORDER=cnt++;   //移动顺序
+                    if (VTRTIERNO>=82){
+                        MOVEORDER = MOVEORDER + moveorderchange[k-1];
+                    }
                     System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
                     newPrestowageInfo = new PreStowageInfo();
                     newPrestowageInfo.setVHT_ID(VHTID);
@@ -135,6 +142,9 @@ public class SWGeneratePrestowageData extends SwingWorker {
                         String GROUPID="G2";      //属性组
                         Integer WEIGHT=25;         //重量
                         Integer MOVEORDER=cnt++;   //移动顺序
+                        if (VTRTIERNO>=82){
+                            MOVEORDER = MOVEORDER + moveorderchange[k-1];
+                        }
                         System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
                         newPrestowageInfo = new PreStowageInfo();
                         newPrestowageInfo.setVHT_ID(VHTID);
