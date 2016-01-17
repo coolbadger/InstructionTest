@@ -188,15 +188,11 @@ public class MainUI extends JFrame {
 				this.menuBar.add(this.menu2);
 				{
 					this.groups = new JMenuItem("属性组");
-
 					this.groups.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-
-
-							//弹出个框，跑后台线程
+							//跑后台线程
 							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
-
 							//后台线程结束后,打开窗口
 							SWGenerateGroupData swGenerateGroupData = new SWGenerateGroupData(){
 								@Override
@@ -212,7 +208,30 @@ public class MainUI extends JFrame {
 					});
 
 					this.prestowage = new JMenuItem("预配图");
+					this.prestowage.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+							SWGeneratePrestowageData swGeneratePrestowageData = new SWGeneratePrestowageData(){
+								@Override
+								protected void done() {
+									super.done();
+									PrestowageFrame prestowageFrame = new PrestowageFrame();
+									prestowageFrame.setVisible(true);
+									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+								}
+							};
+							swGeneratePrestowageData.run();
+						}
+					});
 					this.moveorder = new JMenuItem("作业序列");
+					this.moveorder.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							MoveorderFrame moveorderFrame = new MoveorderFrame();
+							moveorderFrame.setVisible(true);
+						}
+					});
 					this.menu2.add(this.groups);
 					this.menu2.add(this.prestowage);
 					this.menu2.add(this.moveorder);
