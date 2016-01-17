@@ -1,7 +1,9 @@
 package ui;
 
+import importData.CraneInfoProcess;
 import importData.ImportData;
 import importData.VesselStructureInfoProcess;
+import importData.VoyageInfoProcess;
 import instruction.MoveInfo;
 import instruction.UnitPosition;
 import main.*;
@@ -117,7 +119,12 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							File file= choosefile();
-							System.out.println(file.getName());
+							if(!".".equals(file.getName())) {
+								System.out.println("打开航次数据文件："+file.getName());
+								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
+								//将字符串解析,将船舶结构数据保存到全局变量里面
+								ImportData.voyageInfoList = VoyageInfoProcess.getVoyageInfo(str.toString());
+							}
 						}
 					});
 					this.shipstructure = new JMenuItem("船舶结构");
@@ -139,7 +146,13 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							File file= choosefile();
-							System.out.println(file.getName());
+							if(!".".equals(file.getName())) {
+								System.out.println("打开桥机数据文件："+file.getName());
+								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
+								//将字符串解析,将船舶结构数据保存到全局变量里面
+								ImportData.craneInfoList = CraneInfoProcess.getCraneInfo(str.toString());
+								System.out.println(ImportData.craneInfoList.get(0).getNAME());
+							}
 						}
 					});
 					this.container = new JMenuItem("在场箱");
