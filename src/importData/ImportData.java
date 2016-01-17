@@ -12,4 +12,8 @@ public class ImportData {
     public static List<VesselStructureInfo> vesselStructureInfo;//船舶结构数据
     public static ArrayList<PreStowageInfo> preStowageInfoArrayList; //预配图数据及moveorder数据
 
+    public static List<VoyageInfo> voyageInfoList;//航次信息
+
+    public static List<CraneInfo> craneInfoList;//桥机信息
+
 }

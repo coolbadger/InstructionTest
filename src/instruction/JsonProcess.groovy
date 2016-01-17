@@ -79,9 +79,9 @@ class JsonProcess {
                 moveInfo.putCHE = movInsItem.putCHE
 
                 moveInfo.dispatchTime = instructionDate
-                if (movInsItem.fetchTime)
+                if (movInsItem.fetchTime != null)
                     moveInfo.fetchTime = Date.parse(dateFormat, movInsItem.fetchTime)
-                if (movInsItem.carryTime)
+                if (movInsItem.carryTime != null)
                     moveInfo.carryTime = Date.parse(dateFormat, movInsItem.carryTime)
                 if (movInsItem.putTime)
                     moveInfo.putTime = Date.parse(dateFormat, movInsItem.putTime)
