@@ -6,7 +6,11 @@ import importData.PreStowageInfo;
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.*;
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.util.Arrays;
 
@@ -14,21 +18,40 @@ import java.util.Arrays;
  * Created by leko on 2016/1/16.
  */
 public class PrestowageFrame extends JFrame {
+
     private JPanel panelCenter;
     private JPanel contentPane;
     private JScrollPane scrollPane;
     private JTable tableWQL;
 
+    private JLabel jlFilter;
+    private JPanel jpFilter;
+    private JTextField jfFilter;
+    private JButton btn;
+
+
     PrestowageFrame() {initComponents();}
 
     private void initComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 1000, 600);
+        setSize(1000, 600);
+        setLocationRelativeTo(null);//居中显示
         {
+            jlFilter = new JLabel("按舱位ID查询:");
+            jfFilter = new JTextField(10);
+            btn = new JButton("查询");
+
+            jpFilter = new JPanel(new FlowLayout());
+            jpFilter.add(jlFilter);
+            jpFilter.add(jfFilter);
+            jpFilter.add(btn);
+
             this.panelCenter = new JPanel();
             this.panelCenter.setBorder(new TitledBorder(null, "预配信息", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+
             this.contentPane = new JPanel();
             this.contentPane.setLayout(new BorderLayout(0, 0));
+            this.contentPane.add(jpFilter, BorderLayout.NORTH);
             this.contentPane.add(this.panelCenter, BorderLayout.CENTER);
             setContentPane(this.contentPane);
             this.panelCenter.setLayout(new BorderLayout(0, 0));
@@ -65,6 +88,19 @@ public class PrestowageFrame extends JFrame {
                     this.tableWQL.setModel(tableModel);
                 }
             }
+
+            final TableRowSorter<TableModel> sorter = new TableRowSorter<TableModel>(
+                    tableWQL.getModel());
+            tableWQL.setRowSorter(sorter);
+            btn.addActionListener(new ActionListener() {
+                @Override
+                public void actionPerformed(ActionEvent e) {
+                    String text = jfFilter.getText();
+                    if(text.length() == 0)
+                        sorter.setRowFilter(null);
+                    sorter.setRowFilter(RowFilter.regexFilter(text, 0));//按表格第一例筛选
+                }
+            });
         }
     }
 }

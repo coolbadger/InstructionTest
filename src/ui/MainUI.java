@@ -105,7 +105,8 @@ public class MainUI extends JFrame {
 
 	private void initComponents() {
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		setBounds(100, 100, 1000, 600);
+		setSize(1000, 600);
+		setLocationRelativeTo(null);//居中显示
 		{
 			this.menuBar = new JMenuBar();
 			this.menuBar.setBackground(Color.LIGHT_GRAY);
@@ -121,9 +122,11 @@ public class MainUI extends JFrame {
 							File file= choosefile();
 							if(!".".equals(file.getName())) {
 								System.out.println("打开航次数据文件："+file.getName());
+								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
 								//将字符串解析,将船舶结构数据保存到全局变量里面
 								ImportData.voyageInfoList = VoyageInfoProcess.getVoyageInfo(str.toString());
+								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
 					});
@@ -135,9 +138,11 @@ public class MainUI extends JFrame {
 							//System.out.println(file.getName());
 							if(!".".equals(file.getName())) {
 								System.out.println("打开船舶结构文件："+file.getName());
+								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
 								//将字符串解析,将船舶结构数据保存到全局变量里面
 								ImportData.vesselStructureInfo = VesselStructureInfoProcess.getVesselStructureInfo(str.toString());
+								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
 					});
@@ -148,10 +153,12 @@ public class MainUI extends JFrame {
 							File file= choosefile();
 							if(!".".equals(file.getName())) {
 								System.out.println("打开桥机数据文件："+file.getName());
+								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
 								//将字符串解析,将船舶结构数据保存到全局变量里面
 								ImportData.craneInfoList = CraneInfoProcess.getCraneInfo(str.toString());
-								System.out.println(ImportData.craneInfoList.get(0).getNAME());
+//								System.out.println(ImportData.craneInfoList.get(0).getNAME());
+								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
 					});
@@ -254,6 +261,14 @@ public class MainUI extends JFrame {
 				this.menuBar.add(this.menu3);
 				{
 					this.cwp = new JMenuItem("cwp计划");
+					this.cwp.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							DialogFrame d = new DialogFrame("系统正在调用cwp算法，请耐心等待...");
+						}
+					});
+
+
 					this.stowage = new JMenuItem("自动配载");
 					this.menu3.add(this.cwp);
 					this.menu3.add(this.stowage);

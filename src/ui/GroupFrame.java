@@ -25,7 +25,8 @@ public class GroupFrame extends JFrame {
 
     private void initComponents() {
         setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-        setBounds(100, 100, 1000, 600);
+        setSize(1000, 600);
+        setLocationRelativeTo(null);//居中显示
         {
             this.panelCenter = new JPanel();
             this.panelCenter.setBorder(new TitledBorder(null, "属性组", TitledBorder.LEADING, TitledBorder.TOP, null, null));
