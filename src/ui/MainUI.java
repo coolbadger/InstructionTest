@@ -270,7 +270,6 @@ public class MainUI extends JFrame {
 					this.cwp.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							System.out.println("生成船舱信息");
 							final SWGenerateHatchData swGenerateHatchData = new SWGenerateHatchData(){
 								@Override
 								protected void done() {
@@ -278,6 +277,13 @@ public class MainUI extends JFrame {
 								}
 							};
 							swGenerateHatchData.run();
+							final SWGenerateWorkMoveData swGenerateWorkMoveData = new SWGenerateWorkMoveData(){
+								@Override
+								protected void done() {
+									super.done();
+								}
+							};
+							swGenerateWorkMoveData.run();
 						}
 					});
 

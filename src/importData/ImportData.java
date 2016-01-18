@@ -21,7 +21,7 @@ public class ImportData {
     public static List<CraneInfo> craneInfoList;//桥机信息
 
     public static List<HatchInfo> hatchInfoList; //船舱信息
-
+    public static List<WorkMoveInfo> workMoveInfoList; //舱内作业关信息
 
 
 }
