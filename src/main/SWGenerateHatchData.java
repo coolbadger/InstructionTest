@@ -18,9 +18,15 @@ public class SWGenerateHatchData extends SwingWorker {
     protected Object doInBackground() throws Exception {
         HatchInfo newhatchInfo;
         System.out.println("start");
-        //Date workingstarttime = ImportData.voyageInfoList.get(0).getVOTPWKSTTM();
-        //Date workingendtime = ImportData.voyageInfoList.get(0).getVOTPWKENTM();
+        Date workingstarttime = ImportData.voyageInfoList.get(0).getVOTPWKSTTM();
+        Date workingendtime = ImportData.voyageInfoList.get(0).getVOTPWKENTM();
         String vesselID = ImportData.voyageInfoList.get(0).getVESSELID();
+        WorkingTimeRange workingTimeRange = new WorkingTimeRange();
+        workingTimeRange.setID(null);
+        workingTimeRange.setWORKSTARTTIME(workingstarttime);
+        workingTimeRange.setWORKENDTIME(workingendtime);
+        List<WorkingTimeRange> workingTimeRangeList = new ArrayList<WorkingTimeRange>();
+        workingTimeRangeList.add(workingTimeRange);
         Integer i=0;
         for (HatchPositionInfo hatchPositionInfo: ImportData.hatchPositionInfoList){
             newhatchInfo = new HatchInfo();
@@ -31,7 +37,7 @@ public class SWGenerateHatchData extends SwingWorker {
             newhatchInfo.setMOVECOUNT(ImportData.movecounts.get(i++));
             newhatchInfo.setNO(hatchPositionInfo.getVHT_ID());
             newhatchInfo.setSEQ(hatchPositionInfo.getVHT_ID());
-            //newhatchInfo.setWORKINGTIMERANGES();工作时间
+            newhatchInfo.setWORKINGTIMERANGES(workingTimeRangeList);//工作时间
             System.out.println(newhatchInfo.getHORIZONTALSTARTPOSITION()+" "+newhatchInfo.getID()+" "+newhatchInfo.getMOVECOUNT());
             hatchInfoList.add(newhatchInfo);
         }
