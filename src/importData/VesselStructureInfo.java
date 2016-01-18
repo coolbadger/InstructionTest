@@ -10,8 +10,9 @@ public class VesselStructureInfo {
 
     private Integer VHTID;//舱位ID
     private Integer LENGTH;//舱位长度
+    private Integer VHTPOSITION; //舱开始相对于船头位置
     private Integer VBYBAYID;//倍位ID
-    private Integer VBYPOSITION;//倍位中心的绝对位置
+    private Integer VBYPOSITION;//倍位中心相对于船头位置
     private Integer VTRTIERNO;//层号
     private Integer VTRTIERSEQ;//层序号
     private Integer VRWROWNO;//排号
@@ -34,6 +35,14 @@ public class VesselStructureInfo {
 
     public void setLENGTH(Integer LENGTH) {
         this.LENGTH = LENGTH;
+    }
+
+    public Integer getVHTPOISITION() {
+        return VHTPOSITION;
+    }
+
+    public void setVHTPOISITION(Integer VHTPOISITION) {
+        this.VHTPOSITION = VHTPOISITION;
     }
 
     public Integer getVBYBAYID() {

@@ -6,7 +6,9 @@ import importData.PreStowageInfo;
 import javax.swing.*;
 import java.lang.reflect.Array;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.HashMap;
+import java.util.List;
 
 /**
  * Created by leko on 2016/1/16.
@@ -18,6 +20,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
     private static Integer[] moveorderchange ={5,3,4,0,3,-3,2,-6,1,-9};
     private static Integer ROWnum = 10;
     private static ArrayList<PreStowageInfo> preStowageInfoArrayList = new ArrayList<PreStowageInfo>();
+    private static List<Integer> movecounts =new ArrayList<Integer>(Arrays.asList(160,0,120,120,0,0,240,260,160,140,0,150,0,148,0));
 
     @Override
     protected Object doInBackground() throws Exception {
@@ -160,6 +163,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
             }
         }
         ImportData.preStowageInfoArrayList = preStowageInfoArrayList;
+        ImportData.movecounts = movecounts;
         System.out.print("结束生成预配信息");
         return null;
     }

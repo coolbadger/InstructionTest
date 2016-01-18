@@ -261,13 +261,25 @@ public class MainUI extends JFrame {
 				this.menuBar.add(this.menu3);
 				{
 					this.cwp = new JMenuItem("cwp计划");
+//					this.cwp.addActionListener(new ActionListener() {
+//						@Override
+//						public void actionPerformed(ActionEvent e) {
+//							DialogFrame d = new DialogFrame("系统正在调用cwp算法，请耐心等待...");
+//						}
+//					});
 					this.cwp.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							DialogFrame d = new DialogFrame("系统正在调用cwp算法，请耐心等待...");
+							System.out.println("生成船舱信息");
+							final SWGenerateHatchData swGenerateHatchData = new SWGenerateHatchData(){
+								@Override
+								protected void done() {
+									super.done();
+								}
+							};
+							swGenerateHatchData.run();
 						}
 					});
-
 
 					this.stowage = new JMenuItem("自动配载");
 					this.menu3.add(this.cwp);
