@@ -23,5 +23,6 @@ public class ImportData {
     public static List<HatchInfo> hatchInfoList; //船舱信息
     public static List<WorkMoveInfo> workMoveInfoList; //舱内作业关信息
 
+    public static OthersInfo othersInfo;//其他信息
 
 }

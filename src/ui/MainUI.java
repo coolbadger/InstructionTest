@@ -1,9 +1,6 @@
 package ui;
 
-import importData.CraneInfoProcess;
-import importData.ImportData;
-import importData.VesselStructureInfoProcess;
-import importData.VoyageInfoProcess;
+import importData.*;
 import instruction.MoveInfo;
 import instruction.UnitPosition;
 import main.*;
@@ -124,7 +121,7 @@ public class MainUI extends JFrame {
 								System.out.println("打开航次数据文件："+file.getName());
 								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
-								//将字符串解析,将船舶结构数据保存到全局变量里面
+								//将字符串解析,将航次数据保存到全局变量里面
 								ImportData.voyageInfoList = VoyageInfoProcess.getVoyageInfo(str.toString());
 								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
@@ -155,7 +152,7 @@ public class MainUI extends JFrame {
 								System.out.println("打开桥机数据文件："+file.getName());
 								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
-								//将字符串解析,将船舶结构数据保存到全局变量里面
+								//将字符串解析,将桥机数据保存到全局变量里面
 								ImportData.craneInfoList = CraneInfoProcess.getCraneInfo(str.toString());
 //								System.out.println(ImportData.craneInfoList.get(0).getNAME());
 								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
@@ -192,8 +189,17 @@ public class MainUI extends JFrame {
 					this.others.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							File file= choosefile();
-							System.out.println(file.getName());
+							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+							ImportData.othersInfo = OthersInfoProcess.getOthersInfo();
+							if(ImportData.othersInfo != null) {
+								JOptionPane.showMessageDialog(MainUI.this, "其他信息导入成功!",
+										"提示", JOptionPane.INFORMATION_MESSAGE);
+							}else {
+								JOptionPane.showMessageDialog(MainUI.this, "其他信息导入失败!",
+										"提示", JOptionPane.INFORMATION_MESSAGE);
+							}
+							setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+
 						}
 					});
 					this.menu1.add(this.voyage);
@@ -270,6 +276,7 @@ public class MainUI extends JFrame {
 					this.cwp.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
+							System.out.println("生成船舱信息");
 							final SWGenerateHatchData swGenerateHatchData = new SWGenerateHatchData(){
 								@Override
 								protected void done() {
@@ -277,13 +284,6 @@ public class MainUI extends JFrame {
 								}
 							};
 							swGenerateHatchData.run();
-							final SWGenerateWorkMoveData swGenerateWorkMoveData = new SWGenerateWorkMoveData(){
-								@Override
-								protected void done() {
-									super.done();
-								}
-							};
-							swGenerateWorkMoveData.run();
 						}
 					});
 
