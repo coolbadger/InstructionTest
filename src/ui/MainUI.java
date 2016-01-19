@@ -322,6 +322,21 @@ public class MainUI extends JFrame {
 					});
 
 					this.stowage = new JMenuItem("自动配载");
+					this.stowage.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+							final SWGenerateAutostowData swGenerateAutostowData = new SWGenerateAutostowData(){
+								@Override
+								protected void done() {
+									super.done();
+									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//设置鼠标正常
+								}
+							};
+							swGenerateAutostowData.run();
+						}
+
+					});
 					this.menu3.add(this.cwp);
 					this.menu3.add(this.stowage);
 				}

@@ -1,6 +1,7 @@
 package importData;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Set;
 
@@ -16,6 +17,7 @@ public class ImportData {
     public static List<HatchPositionInfo> hatchPositionInfoList;//船舱边缘绝对位置
     public static List<BayPositionInfo> bayPositionInfoList;//倍位中心绝对位置
 
+    public static HashMap<String, ArrayList<String>> groupmap;//属性组信息
     public static ArrayList<PreStowageInfo> preStowageInfoArrayList; //预配图数据及moveorder数据
     public static List<Integer> movecounts;     //每个舱move数
 

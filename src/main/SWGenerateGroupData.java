@@ -2,6 +2,7 @@ package main;
 
 import importData.ContainerInfo;
 import importData.ContainerInfoProcess;
+import importData.ImportData;
 
 import javax.swing.*;
 import java.util.*;
@@ -50,6 +51,7 @@ public class SWGenerateGroupData extends SwingWorker {
         }
         System.out.println(groupmap);
 
+        ImportData.groupmap = groupmap;
         GroupData.setGroupMap(groupmap);
         System.out.println("结束生成分组属性");
 
