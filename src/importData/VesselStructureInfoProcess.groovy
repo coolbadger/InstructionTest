@@ -63,7 +63,7 @@ class VesselStructureInfoProcess {
                     newhatchPositionInfo.setVHT_ID(VHTID);
                     newhatchPositionInfo.setLENGTH(Length);
                     Integer position = startposition+VHTPOSITION;
-                    newhatchPositionInfo.setPOSITION(position);           //需要修改
+                    newhatchPositionInfo.setPOSITION(position);
                     hatchs.add(VHTID);
                     hatchPositionInfoList.add(newhatchPositionInfo);
                 }

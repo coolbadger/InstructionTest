@@ -291,6 +291,13 @@ public class MainUI extends JFrame {
 								}
 							};
 							swGenerateHatchData.run();
+							final SWGenerateWorkMoveData swGenerateWorkMoveData = new SWGenerateWorkMoveData(){
+								@Override
+								protected void done() {
+									super.done();
+								}
+							};
+							swGenerateWorkMoveData.run();
 						}
 					});
 
