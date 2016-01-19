@@ -182,7 +182,14 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							File file= choosefile();
-							System.out.println(file.getName());
+							if(!".".equals(file.getName())) {
+								System.out.println("打开在场箱区信息文件："+file.getName());
+								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
+								//将字符串解析,将在场箱区信息保存到全局变量里面
+								ImportData.containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(str.toString());
+								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+							}
 						}
 					});
 					this.others = new JMenuItem("其他信息");

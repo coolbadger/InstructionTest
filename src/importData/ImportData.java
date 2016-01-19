@@ -25,4 +25,5 @@ public class ImportData {
 
     public static OthersInfo othersInfo;//其他信息
 
+    public static List<ContainerAreaInfo> containerAreaInfoList;//场箱区信息
 }
