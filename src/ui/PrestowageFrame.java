@@ -61,7 +61,7 @@ public class PrestowageFrame extends JFrame {
                 {
                     this.tableWQL = new JTable();
                     this.scrollPane.setViewportView(this.tableWQL);
-                    DefaultTableModel tableModel = new DefaultTableModel();
+                    ui.TableModel tableModel = new ui.TableModel();
 
                     //增加列名
                     ArrayList<String> colList = new ArrayList<String>(Arrays.asList("舱位ID","倍位ID", "层号", "排号","尺寸","属性组","重量等级"));
@@ -86,6 +86,8 @@ public class PrestowageFrame extends JFrame {
                         tableModel.addRow(rowData);
                     }
                     this.tableWQL.setModel(tableModel);
+
+
                 }
             }
 
@@ -96,9 +98,11 @@ public class PrestowageFrame extends JFrame {
                 @Override
                 public void actionPerformed(ActionEvent e) {
                     String text = jfFilter.getText();
-                    if(text.length() == 0)
+                    if(text.length() == 0){
                         sorter.setRowFilter(null);
-                    sorter.setRowFilter(RowFilter.regexFilter(text, 0));//按表格第一例筛选
+                    }else {
+                        sorter.setRowFilter(RowFilter.regexFilter("^"+text+"$", 0));//按表格第一例筛选
+                    }
                 }
             });
         }

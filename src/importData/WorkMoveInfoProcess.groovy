@@ -25,7 +25,7 @@ class WorkMoveInfoProcess {
                     map.put("CWPWORKMOVENUM", it.CWPWORKMOVENUM)
                     map.put("DECK", it.DECK)
                     map.put("GLOBALPRIORITY", it.GLOBALPRIORITY)
-                    map.put("HATCH", it.HATCH)
+                    map.put("HATCHID", it.HATCH)
                     map.put("HORIZONTALPOSITION", it.HORIZONTALPOSITION)
                     map.put("LD", it.LD)
                     map.put("MOVETYPE", it.MOVETYPE)

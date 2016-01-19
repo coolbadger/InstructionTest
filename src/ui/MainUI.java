@@ -304,6 +304,16 @@ public class MainUI extends JFrame {
 								}
 							};
 							swGenerateWorkMoveData.run();
+							String cranes = CraneInfoProcess.getCraneInfoJsonStr();
+							String Hatches = HatchInfoProcess.getHatchInfoJsonStr();
+							String Moves = WorkMoveInfoProcess.getWorkMoveInfoJsonStr();
+							try {
+								FileUtil.writeToFile("E:/cwpTestData/cwpWorkCranes221.txt", cranes);
+								FileUtil.writeToFile("E:/cwpTestData/cwpWorkHatches221.txt", Hatches);
+								FileUtil.writeToFile("E:/cwpTestData/cwpWorkMoves221.txt", Moves);
+							} catch (Exception e1) {
+								e1.printStackTrace();
+							}
 						}
 					});
 
