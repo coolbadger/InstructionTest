@@ -123,6 +123,8 @@ public class MainUI extends JFrame {
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
 								//将字符串解析,将航次数据保存到全局变量里面
 								ImportData.voyageInfoList = VoyageInfoProcess.getVoyageInfo(str.toString());
+								VoyageFrame voyageFrame = new VoyageFrame();
+								voyageFrame.setVisible(true);
 								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
@@ -138,7 +140,9 @@ public class MainUI extends JFrame {
 								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
 								//将字符串解析,将船舶结构数据保存到全局变量里面
-								ImportData.vesselStructureInfo = VesselStructureInfoProcess.getVesselStructureInfo(str.toString());
+								ImportData.vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(str.toString());
+								VesselStructureFrame vesselStructureFrame = new VesselStructureFrame();
+								vesselStructureFrame.setVisible(true);
 								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
@@ -155,6 +159,8 @@ public class MainUI extends JFrame {
 								//将字符串解析,将桥机数据保存到全局变量里面
 								ImportData.craneInfoList = CraneInfoProcess.getCraneInfo(str.toString());
 //								System.out.println(ImportData.craneInfoList.get(0).getNAME());
+								CraneFrame craneFrame = new CraneFrame();
+								craneFrame.setVisible(true);
 								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
