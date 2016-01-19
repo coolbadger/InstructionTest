@@ -14,7 +14,6 @@ public class ContainerAreaInfo {
     private String LOCATIONRB;//箱区右下角坐标
     private String LOCATIONRH;//箱区右上角坐标
     private Integer VBYNUM;//箱区倍位数
-    private Integer BAYID;//倍ID
     private Integer VRWNUM;//排的数量
     private Integer VTRNUM;//层的数量
     private String SCTYPE;//箱区吊机的类型
@@ -83,14 +82,6 @@ public class ContainerAreaInfo {
 
     public void setVBYNUM(Integer VBYNUM) {
         this.VBYNUM = VBYNUM;
-    }
-
-    public Integer getBAYID() {
-        return BAYID;
-    }
-
-    public void setBAYID(Integer BAYID) {
-        this.BAYID = BAYID;
     }
 
     public Integer getVRWNUM() {

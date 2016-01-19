@@ -30,7 +30,7 @@ class ContainerAreaInfoProcess {
                 containerAreaInfo.LOCATIONLH = containerArea.LOCATIONLH
                 containerAreaInfo.LOCATIONRB = containerArea.LOCATIONRB
                 containerAreaInfo.LOCATIONRH = containerArea.LOCATIONRH
-                containerAreaInfo.BAYID = containerArea.BAYID
+                containerAreaInfo.VBYNUM = containerArea.VBYNUM
                 containerAreaInfo.VRWNUM = containerArea.VRWNUM
                 containerAreaInfo.VTRNUM = containerArea.VTRNUM
                 containerAreaInfo.SCTYPE = containerArea.SCTYPE

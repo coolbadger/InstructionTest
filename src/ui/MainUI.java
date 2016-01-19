@@ -175,6 +175,8 @@ public class MainUI extends JFrame {
 								@Override
 								protected void done() {
 									super.done();
+									ContainerFrame containerFrame = new ContainerFrame();
+									containerFrame.setVisible(true);
 									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 								}
 							};
@@ -194,6 +196,8 @@ public class MainUI extends JFrame {
 								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
 								//将字符串解析,将在场箱区信息保存到全局变量里面
 								ImportData.containerAreaInfoList = ContainerAreaInfoProcess.getContainerAreaInfo(str.toString());
+								ContainerAreaFrame containerAreaFrame = new ContainerAreaFrame();
+								containerAreaFrame.setVisible(true);
 								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
