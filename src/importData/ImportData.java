@@ -10,6 +10,8 @@ import java.util.Set;
  */
 public class ImportData {
 
+    public static List<ContainerInfo> containerInfoList; //在场箱数据
+
     public static List<VesselStructureInfo> vesselStructureInfoList;//船舶结构数据
     public static List<HatchPositionInfo> hatchPositionInfoList;//船舱边缘绝对位置
     public static List<BayPositionInfo> bayPositionInfoList;//倍位中心绝对位置

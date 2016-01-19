@@ -34,7 +34,8 @@ public class SWGeneratePrestowageData extends SwingWorker {
             Integer[] a6={9,100,60};
             Integer[] a7={10,60,80};
             Integer[] a8={12,70,80};
-            Integer[] a9={14,80,68};
+            Integer[] a9={14,74,68};
+            Integer[] a10={15,6,0};
             allocation.add(a1);
             allocation.add(a2);
             allocation.add(a3);
@@ -44,6 +45,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
             allocation.add(a7);
             allocation.add(a8);
             allocation.add(a9);
+            allocation.add(a10);
         }
         PreStowageInfo newPrestowageInfo;
         for (Integer[] allo:allocation){

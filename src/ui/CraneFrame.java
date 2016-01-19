@@ -31,7 +31,7 @@ public class CraneFrame extends JFrame {
         setLocationRelativeTo(null);//居中显示
         {
             this.panelCenter = new JPanel();
-            this.panelCenter.setBorder(new TitledBorder(null, "船舶结构", TitledBorder.LEADING, TitledBorder.TOP, null, null));
+            this.panelCenter.setBorder(new TitledBorder(null, "桥机", TitledBorder.LEADING, TitledBorder.TOP, null, null));
             this.contentPane = new JPanel();
             this.contentPane.setLayout(new BorderLayout(0, 0));
             this.contentPane.add(this.panelCenter, BorderLayout.CENTER);
