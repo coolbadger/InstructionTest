@@ -18,6 +18,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
     private static ArrayList<Integer[]>  allocation = new ArrayList<Integer[]>();
     private static Integer[] tier={2,4,6,8,10,12,14,16,18,20,82,84,86,88,90,92,94,96,98};
     private static Integer[] moveorderchange ={5,3,4,0,3,-3,2,-6,1,-9};
+    private static Integer[] moveorderchange2={0,-5,-4,-4,-3,-3,-2,-2,-1,-1,0};
     private static Integer ROWnum = 10;
     private static ArrayList<PreStowageInfo> preStowageInfoArrayList = new ArrayList<PreStowageInfo>();
     private static List<Integer> movecounts =new ArrayList<Integer>(Arrays.asList(160,0,120,120,0,0,240,260,160,140,0,150,0,148,0));
@@ -148,6 +149,10 @@ public class SWGeneratePrestowageData extends SwingWorker {
                         Integer MOVEORDER=cnt++;   //移动顺序
                         if (VTRTIERNO>=82){
                             MOVEORDER = MOVEORDER + moveorderchange[k-1];
+                            if (j==TIERnum-1){
+                                Integer last = (allo[1]+allo[2]/2)%10;
+                                MOVEORDER = MOVEORDER +moveorderchange2[last];
+                            }
                         }
                         System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
                         newPrestowageInfo = new PreStowageInfo();
