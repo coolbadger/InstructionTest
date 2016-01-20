@@ -549,14 +549,11 @@ public class MainUI extends JFrame {
 						tableModel.addColumn(col);
 					}
 
-
-
 					this.tableWQL.setModel(tableModel);
 //					this.tableWQL.setRowSorter(new TableRowSorter(tableModel));
 					//针对特殊的列设置排序器
-//					TableRowSorter tableRowSorter = new TableRowSorter(tableModel);
-					final TableRowSorter<javax.swing.table.TableModel> tableRowSorter = new TableRowSorter<javax.swing.table.TableModel>(
-							tableWQL.getModel());
+					TableRowSorter tableRowSorter = new TableRowSorter(tableModel);
+
 					tableRowSorter.setComparator(tableWQL.getColumn("gkey").getModelIndex(), new Comparator<String>() {
 						@Override
 						public int compare(String o1, String o2) {
@@ -577,12 +574,39 @@ public class MainUI extends JFrame {
 							}
 						}
 					});
-					//tableRowSorter.setComparator();
+
+					Comparator<Number> numberComparator = new Comparator<Number>() {
+						@Override
+						public int compare(Number o1, Number o2) {
+							if ( o1 == null ) {
+								return -1;
+							}
+							if ( o2 == null ) {
+								return 1;
+							}
+							if ( o1.doubleValue() < o2.doubleValue() ) {
+								return -1;
+							}
+							if ( o1.doubleValue() > o2.doubleValue() ) {
+								return -1;
+							}
+							return 0;
+						}
+					};
+
+					tableRowSorter.setComparator(tableWQL.getColumn("moveId").getModelIndex(), numberComparator);
+
+					tableRowSorter.setComparator(tableWQL.getColumn("WORKINGSTARTTIME").getModelIndex(), numberComparator);
+
 					tableWQL.setRowSorter(tableRowSorter);
 					//设置默认排序
 					RowSorter.SortKey sortKey = new RowSorter.SortKey(tableWQL.getColumn("gkey").getModelIndex(),SortOrder.ASCENDING);
+					RowSorter.SortKey sortKey1 = new RowSorter.SortKey(tableWQL.getColumn("moveId").getModelIndex(),SortOrder.ASCENDING);
+					RowSorter.SortKey sortKey2 = new RowSorter.SortKey(tableWQL.getColumn("WORKINGSTARTTIME").getModelIndex(),SortOrder.ASCENDING);
 					List<RowSorter.SortKey> sortKeyList = new ArrayList<RowSorter.SortKey>();
 					sortKeyList.add(sortKey);
+					sortKeyList.add(sortKey1);
+					sortKeyList.add(sortKey2);
 					tableRowSorter.setSortKeys(sortKeyList);
 					tableRowSorter.setSortsOnUpdates(true);
 				}
@@ -593,18 +617,8 @@ public class MainUI extends JFrame {
 			@Override
 			public void globalDataChanged() {
 				System.out.println("检测到全局数据变化，更新表格");
-//				DefaultTableModel tableModel = (DefaultTableModel) tableWQL.getModel();
-				DefaultTableModel tableModel = new DefaultTableModel(){
-					public Class getColumnClass(int column) {
-						Class returnValue;
-						if ((column >= 0) && (column < getColumnCount())) {
-							returnValue = getValueAt(0, column).getClass();
-						} else {
-							returnValue = Object.class;
-						}
-						return returnValue;
-					}
-				};
+				DefaultTableModel tableModel = (DefaultTableModel) tableWQL.getModel();
+
 				while (tableModel.getRowCount() > 0) {//清除表格中已有数据
 					tableModel.removeRow(tableModel.getRowCount() - 1);
 				}
