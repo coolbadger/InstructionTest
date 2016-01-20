@@ -4,6 +4,7 @@ import importData.*;
 import utils.FileUtil;
 
 import javax.swing.*;
+import java.util.List;
 
 /**
  * Created by leko on 2016/1/19.
@@ -13,12 +14,17 @@ public class SWGenerateAutostowData extends SwingWorker {
     public String container;
     public String cwpoutput;
     public String prestowage;
+    private static List<ContainerAreaInfo> containerAreaInfos;
+    private static List<ContainerInfo> containerInfos;
+    private static List<PreStowageInfo> preStowageInfos;
+    private static List<CwpResultInfo> cwpResultInfos;
 
     @Override
     protected Object doInBackground() throws Exception {
         //生成箱区信息字符串
         containerarea="";
-        for (ContainerAreaInfo containerAreaInfo: ImportData.containerAreaInfoList)
+        containerAreaInfos = ImportData.containerAreaInfoList;
+        for (ContainerAreaInfo containerAreaInfo: containerAreaInfos)
         {
             containerarea+=containerAreaInfo.getASCBOTTOMSPEED().toString()+",";
             containerarea+=containerAreaInfo.getASCTOPSPEED().toString()+",";
@@ -34,7 +40,8 @@ public class SWGenerateAutostowData extends SwingWorker {
         }
         //生成在场箱信息字符串
         container="";
-        for (ContainerInfo containerInfo: ImportData.containerInfoList)
+        containerInfos = ImportData.containerInfoList;
+        for (ContainerInfo containerInfo: containerInfos)
         {
             container+=containerInfo.getIYC_CNTRNO()+",";
             container+=containerInfo.getIYC_CNTR_AREA_ID()+",";
@@ -50,8 +57,9 @@ public class SWGenerateAutostowData extends SwingWorker {
             container+=containerInfo.getIYC_RETIME()+"#";
         }
         //生成预配箱信息
+        preStowageInfos = ImportData.preStowageInfoArrayList;
         prestowage="";
-        for (PreStowageInfo preStowageInfo:ImportData.preStowageInfoArrayList)
+        for (PreStowageInfo preStowageInfo:preStowageInfos)
         {
             prestowage+=preStowageInfo.getVHT_ID().toString()+",";
             prestowage+=preStowageInfo.getVBY_BAYID().toString()+",";
@@ -65,8 +73,9 @@ public class SWGenerateAutostowData extends SwingWorker {
             prestowage+=preStowageInfo.getMOVE_ORDER().toString()+"#";
         }
         //生成cwp输出结果
+        cwpResultInfos = ImportData.cwpResultInfoList;
         cwpoutput="";
-        for (CwpResultInfo cwpResultInfo:ImportData.cwpResultInfoList)
+        for (CwpResultInfo cwpResultInfo:cwpResultInfos)
         {
             cwpoutput+=cwpResultInfo.getCRANEID().toString()+",";
             cwpoutput+=cwpResultInfo.getHATCHBWID().toString()+",";

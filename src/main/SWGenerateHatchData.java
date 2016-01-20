@@ -16,6 +16,7 @@ public class SWGenerateHatchData extends SwingWorker {
 
     @Override
     protected Object doInBackground() throws Exception {
+        hatchInfoList.removeAll(hatchInfoList);
         HatchInfo newhatchInfo;
         System.out.println("开始生成船舱信息：");
         Date workingstarttime = ImportData.voyageInfoList.get(0).getVOTPWKSTTM();

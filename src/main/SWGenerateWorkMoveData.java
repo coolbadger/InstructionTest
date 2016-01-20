@@ -20,6 +20,7 @@ public class SWGenerateWorkMoveData extends SwingWorker {
 
     @Override
     protected Object doInBackground() throws Exception {
+        workMoveInfoList.removeAll(workMoveInfoList);
         WorkMoveInfo newworkmoveInfo;
         for (BayPositionInfo bayPositionInfo:ImportData.bayPositionInfoList)
         {
