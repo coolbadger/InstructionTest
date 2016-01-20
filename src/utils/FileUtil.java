@@ -35,11 +35,11 @@ public class FileUtil {
 
     public static void writeToFile(String fileName, String content) throws Exception {
         File file = new File(fileName);
-        if(!file.exists()){//判断文件路径是否存在
+        if (!file.exists()) {//判断文件路径是否存在
             File filepath = new File(file.getParent());
             filepath.mkdir();
-        }
-        if(!file.isDirectory()){//判断文件是否存在
+        } else {//删除原来文件，新建文件
+            file.delete();
             file.createNewFile();
         }
         FileWriter fw = new FileWriter(file, true);

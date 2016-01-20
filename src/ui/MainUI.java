@@ -133,18 +133,24 @@ public class MainUI extends JFrame {
 					this.shipstructure.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							File file= choosefile();
-							//System.out.println(file.getName());
-							if(!".".equals(file.getName())) {
-								System.out.println("打开船舶结构文件："+file.getName());
-								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
-								StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
-								//将字符串解析,将船舶结构数据保存到全局变量里面
-								ImportData.vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(str.toString());
-								VesselStructureFrame vesselStructureFrame = new VesselStructureFrame();
-								vesselStructureFrame.setVisible(true);
-								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+							if(ImportData.voyageInfoList != null) {
+								File file= choosefile();
+								//System.out.println(file.getName());
+								if(!".".equals(file.getName())) {
+									System.out.println("打开船舶结构文件："+file.getName());
+									setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+									StringBuffer str = FileUtil.readFileToString(file);//得到文件的字符串
+									//将字符串解析,将船舶结构数据保存到全局变量里面
+									ImportData.vesselStructureInfoList = VesselStructureInfoProcess.getVesselStructureInfo(str.toString());
+									VesselStructureFrame vesselStructureFrame = new VesselStructureFrame();
+									vesselStructureFrame.setVisible(true);
+									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+								}
+							}else {
+								JOptionPane.showMessageDialog(MainUI.this, "请先导入航次信息!",
+										"提示", JOptionPane.INFORMATION_MESSAGE);
 							}
+
 						}
 					});
 					this.crane = new JMenuItem("桥机");
@@ -159,8 +165,10 @@ public class MainUI extends JFrame {
 								//将字符串解析,将桥机数据保存到全局变量里面
 								ImportData.craneInfoList = CraneInfoProcess.getCraneInfo(str.toString());
 //								System.out.println(ImportData.craneInfoList.get(0).getNAME());
-								CraneFrame craneFrame = new CraneFrame();
-								craneFrame.setVisible(true);
+								if(ImportData.craneInfoList != null) {
+									CraneFrame craneFrame = new CraneFrame();
+									craneFrame.setVisible(true);
+								}
 								setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 							}
 						}
@@ -170,19 +178,18 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							File file= choosefile();
-							System.out.println(file.getName());
-							final SWContainerData containerData = new SWContainerData(){
-								@Override
-								protected void done() {
-									super.done();
-									ContainerFrame containerFrame = new ContainerFrame();
-									containerFrame.setVisible(true);
-									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
-								}
-							};
-							containerData.inFile = file;
-							containerData.run();
-
+							if(!".".equals(file.getName())) {
+								System.out.println("打开在场箱数据文件："+file.getName());
+								final SWContainerData containerData = new SWContainerData(){
+									@Override
+									protected void done() {
+										super.done();
+										setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+									}
+								};
+								containerData.inFile = file;
+								containerData.run();
+							}
 						}
 					});
 					this.containerarea = new JMenuItem("箱区信息");
@@ -212,7 +219,7 @@ public class MainUI extends JFrame {
 								JOptionPane.showMessageDialog(MainUI.this, "其他信息导入成功!",
 										"提示", JOptionPane.INFORMATION_MESSAGE);
 							}else {
-								JOptionPane.showMessageDialog(MainUI.this, "其他信息导入失败!",
+								JOptionPane.showMessageDialog(MainUI.this, "请将其他信息文件放在E盘json文件里，导入失败!",
 										"提示", JOptionPane.INFORMATION_MESSAGE);
 							}
 							setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
@@ -235,18 +242,24 @@ public class MainUI extends JFrame {
 						@Override
 						public void actionPerformed(ActionEvent e) {
 							//跑后台线程
-							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
-							//后台线程结束后,打开窗口
-							SWGenerateGroupData swGenerateGroupData = new SWGenerateGroupData(){
-								@Override
-								protected void done() {
-									super.done();
-									GroupFrame groupFrame = new GroupFrame();
-									groupFrame.setVisible(true);
-									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
-								}
-							};
-							swGenerateGroupData.run();
+							if(ImportData.containerInfoList != null) {
+								setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+								//后台线程结束后,打开窗口
+								SWGenerateGroupData swGenerateGroupData = new SWGenerateGroupData(){
+									@Override
+									protected void done() {
+										super.done();
+										GroupFrame groupFrame = new GroupFrame();
+										groupFrame.setVisible(true);
+										setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+									}
+								};
+								swGenerateGroupData.run();
+							}else {
+								JOptionPane.showMessageDialog(MainUI.this, "请导入在场箱信息!",
+										"提示", JOptionPane.INFORMATION_MESSAGE);
+							}
+
 						}
 					});
 
@@ -254,25 +267,41 @@ public class MainUI extends JFrame {
 					this.prestowage.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
-							SWGeneratePrestowageData swGeneratePrestowageData = new SWGeneratePrestowageData(){
-								@Override
-								protected void done() {
-									super.done();
-									PrestowageFrame prestowageFrame = new PrestowageFrame();
-									prestowageFrame.setVisible(true);
-									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+							if(GroupData.getGroupMap() != null) {
+								if(ImportData.vesselStructureInfoList != null) {
+									setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+									SWGeneratePrestowageData swGeneratePrestowageData = new SWGeneratePrestowageData(){
+										@Override
+										protected void done() {
+											super.done();
+											PrestowageFrame prestowageFrame = new PrestowageFrame();
+											prestowageFrame.setVisible(true);
+											setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+										}
+									};
+									swGeneratePrestowageData.run();
+								} else {
+									JOptionPane.showMessageDialog(MainUI.this, "请导入船舶结构信息!",
+											"提示", JOptionPane.INFORMATION_MESSAGE);
 								}
-							};
-							swGeneratePrestowageData.run();
+							} else {
+								JOptionPane.showMessageDialog(MainUI.this, "请先生成属性组!",
+										"提示", JOptionPane.INFORMATION_MESSAGE);
+							}
+
 						}
 					});
 					this.moveorder = new JMenuItem("作业序列");
 					this.moveorder.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							MoveorderFrame moveorderFrame = new MoveorderFrame();
-							moveorderFrame.setVisible(true);
+							if(ImportData.vesselStructureInfoList != null) {
+								MoveorderFrame moveorderFrame = new MoveorderFrame();
+								moveorderFrame.setVisible(true);
+							} else {
+								JOptionPane.showMessageDialog(MainUI.this, "请导入船舶结构信息!",
+										"提示", JOptionPane.INFORMATION_MESSAGE);
+							}
 						}
 					});
 					this.menu2.add(this.groups);
@@ -284,39 +313,52 @@ public class MainUI extends JFrame {
 				this.menuBar.add(this.menu3);
 				{
 					this.cwp = new JMenuItem("cwp计划");
-//					this.cwp.addActionListener(new ActionListener() {
-//						@Override
-//						public void actionPerformed(ActionEvent e) {
-//							DialogFrame d = new DialogFrame("系统正在调用cwp算法，请耐心等待...");
-//						}
-//					});
+
 					this.cwp.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							System.out.println("生成船舱信息");
-							final SWGenerateHatchData swGenerateHatchData = new SWGenerateHatchData(){
-								@Override
-								protected void done() {
-									super.done();
+							if(ImportData.preStowageInfoArrayList != null) {//先判断是否生成预配图
+								System.out.println("生成船舱信息");
+								final SWGenerateHatchData swGenerateHatchData = new SWGenerateHatchData(){
+									@Override
+									protected void done() {
+										super.done();
+									}
+								};
+								swGenerateHatchData.run();
+								System.out.println("生成作业关信息");
+								final SWGenerateWorkMoveData swGenerateWorkMoveData = new SWGenerateWorkMoveData(){
+									@Override
+									protected void done() {
+										super.done();
+									}
+								};
+								swGenerateWorkMoveData.run();
+								if(ImportData.craneInfoList != null) {//判断桥机信息是否导入
+									ImportData.craneJsonStr = CraneInfoProcess.getCraneInfoJsonStr();
+									ImportData.hatchJsonStr = HatchInfoProcess.getHatchInfoJsonStr();
+									ImportData.movesJsonStr = WorkMoveInfoProcess.getWorkMoveInfoJsonStr();
+									//在调用cwp算法之前要判断这3个json串是否生成
+									if(ImportData.craneJsonStr != null && ImportData.hatchJsonStr != null && ImportData.movesJsonStr != null) {
+										try {
+											FileUtil.writeToFile("E:/cwpToJavaData/cwpWorkCranes.txt", ImportData.craneJsonStr);
+											FileUtil.writeToFile("E:/cwpToJavaData/cwpWorkHatches.txt", ImportData.hatchJsonStr);
+											FileUtil.writeToFile("E:/cwpToJavaData/cwpWorkMoves.txt", ImportData.movesJsonStr);
+											CwpProgressFrame cwpProgressFrame = new CwpProgressFrame();//调用cwp算法的界面
+										} catch (Exception e1) {
+											e1.printStackTrace();
+										}
+									} else {
+										JOptionPane.showMessageDialog(MainUI.this, "由于没有生成cwp算法要用的json数据，无法调用cwp算法!",
+												"提示", JOptionPane.INFORMATION_MESSAGE);
+									}
+								} else {
+									JOptionPane.showMessageDialog(MainUI.this, "请导入桥机信息!",
+											"提示", JOptionPane.INFORMATION_MESSAGE);
 								}
-							};
-							swGenerateHatchData.run();
-							final SWGenerateWorkMoveData swGenerateWorkMoveData = new SWGenerateWorkMoveData(){
-								@Override
-								protected void done() {
-									super.done();
-								}
-							};
-							swGenerateWorkMoveData.run();
-							String cranes = CraneInfoProcess.getCraneInfoJsonStr();
-							String Hatches = HatchInfoProcess.getHatchInfoJsonStr();
-							String Moves = WorkMoveInfoProcess.getWorkMoveInfoJsonStr();
-							try {
-								FileUtil.writeToFile("E:/cwpTestData/cwpWorkCranes221.txt", cranes);
-								FileUtil.writeToFile("E:/cwpTestData/cwpWorkHatches221.txt", Hatches);
-								FileUtil.writeToFile("E:/cwpTestData/cwpWorkMoves221.txt", Moves);
-							} catch (Exception e1) {
-								e1.printStackTrace();
+							} else {
+								JOptionPane.showMessageDialog(MainUI.this, "请先生成预配图和作业序列!",
+										"提示", JOptionPane.INFORMATION_MESSAGE);
 							}
 						}
 					});

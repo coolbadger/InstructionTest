@@ -1,5 +1,6 @@
 package importData;
 
+import java.beans.Statement;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -30,4 +31,9 @@ public class ImportData {
     public static OthersInfo othersInfo;//其他信息
 
     public static List<ContainerAreaInfo> containerAreaInfoList;//场箱区信息
+
+    public static String craneJsonStr,hatchJsonStr,movesJsonStr;//要传递给cwp算法的3个json数据字符串
+
+    public static String cwpResult;//保存cwp算法结果
+    public static List<CwpResultInfo> cwpResultInfoList;//解析后用List保存cwp算法结果
 }
