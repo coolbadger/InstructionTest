@@ -18,6 +18,7 @@ public class SWGenarateResultData extends SwingWorker{
     //private static Integer[] hatch;
     private static HashMap<String,String> moverecords;          //根据舱和order定位位置
     private static List<Integer> movecounts;     //每个舱move数
+    private static HashMap<String,String[]> autostowresult; //自动配载结果
 
 
     @Override
@@ -32,6 +33,7 @@ public class SWGenarateResultData extends SwingWorker{
 
         moverecords = ImportData.moveorderrecords;
         movecounts = ImportData.movecounts;
+        autostowresult = ImportData.autostowresult;
         MoveInfo moveInfo;
         List<CwpResultInfo> cwpResultInfoList = ImportData.cwpResultInfoList;
         for (CwpResultInfo cwpResultInfo: cwpResultInfoList)
@@ -60,8 +62,15 @@ public class SWGenarateResultData extends SwingWorker{
                     moveInfo.setGkey(craneID+"@"+moveID.toString());
                     String hatchmoveorder = hatchID+"."+String.valueOf(i);          //舱号连接编号
                     //System.out.println("moveorder:"+hatchmoveorder);
-                    moveInfo.setExToPosition(moverecords.get(hatchmoveorder));
+                    String vesselpositon = moverecords.get(hatchmoveorder);
+                    moveInfo.setExToPosition(vesselpositon);
                     moveInfo.setWORKINGSTARTTIME(starttime+singletime*(i-startmoveorder));
+                    String areaposition = autostowresult.get(vesselpositon)[0];
+                    String unitID = autostowresult.get(vesselpositon)[1];
+                    String size = autostowresult.get(vesselpositon)[2];
+                    moveInfo.setExFromPosition(areaposition);
+                    moveInfo.setUnitId(unitID);
+                    moveInfo.setUnitLength(size);
                     result.add(moveInfo);
 
                 }
