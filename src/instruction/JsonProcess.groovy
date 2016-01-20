@@ -116,19 +116,21 @@ class JsonProcess {
                 unitLength moveInfo.unitLength
 
                 //预计提箱位置
-                exFromPosition {
-                    area moveInfo.exFromPosition.area
-                    bay moveInfo.exFromPosition.bay
-                    lay moveInfo.exFromPosition.lay
-                    tie moveInfo.exFromPosition.tie
-                }
-                //预计放箱位置
-                exToPosition {
-                    area moveInfo.exToPosition.area
-                    bay moveInfo.exToPosition.bay
-                    lay moveInfo.exToPosition.lay
-                    tie moveInfo.exToPosition.tie
-                }
+//                exFromPosition {
+//                    area moveInfo.exFromPosition.area
+//                    bay moveInfo.exFromPosition.bay
+//                    lay moveInfo.exFromPosition.lay
+//                    tie moveInfo.exFromPosition.tie
+//                }
+//                //预计放箱位置
+//                exToPosition {
+//                    area moveInfo.exToPosition.area
+//                    bay moveInfo.exToPosition.bay
+//                    lay moveInfo.exToPosition.lay
+//                    tie moveInfo.exToPosition.tie
+//                }
+                exFromPosition moveInfo.exFromPosition
+                exToPosition moveInfo.exToPosition
                 /*
                 本段代码用于生成测试的返回指令,在发送指令时无需生成
 

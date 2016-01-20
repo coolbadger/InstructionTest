@@ -376,6 +376,9 @@ public class MainUI extends JFrame {
 										protected void done() {
 											super.done();
 											setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//设置鼠标正常
+											ImportData.autostowresult = AutoStowResultProcess.getAutoStowResult();
+											AutostowFrame autostowFrame = new AutostowFrame();
+											autostowFrame.setVisible(true);
 										}
 									};
 									swGenerateAutostowData.run();
