@@ -23,8 +23,10 @@ public class SWGeneratePrestowageData extends SwingWorker {
 
     @Override
     protected Object doInBackground() throws Exception {
-        preStowageInfoArrayList.clear();
+        preStowageInfoArrayList.removeAll(preStowageInfoArrayList);
+        System.out.println("数量："+preStowageInfoArrayList.size());
         records.clear();
+        allocation.clear();
         System.out.println("开始生成预配信息");
         {
             Integer[] a1={1,100,60};                        //第1个舱有100个大箱60个小箱
