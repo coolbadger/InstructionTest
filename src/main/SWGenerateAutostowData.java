@@ -75,7 +75,7 @@ public class SWGenerateAutostowData extends SwingWorker {
             cwpoutput+=cwpResultInfo.getQDC().toString()+',';
             cwpoutput+=cwpResultInfo.getVESSELID().toString()+',';
             cwpoutput+=cwpResultInfo.getWORKINGENDTIME().toString()+',';
-            cwpoutput+=cwpResultInfo.getWORKINGSTARTTIME().toString()+',';
+            cwpoutput+=cwpResultInfo.getWORKINGSTARTTIME().toString()+'#';
         }
         try {
             FileUtil.writeToFile("E:/Containerarea.txt", containerarea);
