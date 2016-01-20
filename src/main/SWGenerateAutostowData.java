@@ -102,6 +102,8 @@ public class SWGenerateAutostowData extends SwingWorker {
         } catch (Exception e1) {
             e1.printStackTrace();
         }
+        //读取自动配载
+
         return null;
     }
 }

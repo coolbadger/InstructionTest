@@ -45,21 +45,22 @@ class JsonProcess {
                 moveInfo.unitId = movInsItem.unitId
                 moveInfo.unitLength = movInsItem.unitLength
                 moveInfo.state = movInsItem.state
-
-                if (movInsItem.exFromPosition)
-                    moveInfo.exFromPosition = new UnitPosition(
-                            movInsItem.exFromPosition.area,
-                            movInsItem.exFromPosition.bay,
-                            movInsItem.exFromPosition.lay,
-                            movInsItem.exFromPosition.tie
-                    )
-                if (movInsItem.exToPosition)
-                    moveInfo.exToPosition = new UnitPosition(
-                            movInsItem.exToPosition.area,
-                            movInsItem.exToPosition.bay,
-                            movInsItem.exToPosition.lay,
-                            movInsItem.exToPosition.tie
-                    )
+                moveInfo.exFromPosition = movInsItem.exFromPosition
+                moveInfo.exToPosition =  movInsItem.exToPosition
+//                if (movInsItem.exFromPosition)
+//                    moveInfo.exFromPosition = new UnitPosition(
+//                            movInsItem.exFromPosition.area,
+//                            movInsItem.exFromPosition.bay,
+//                            movInsItem.exFromPosition.lay,
+//                            movInsItem.exFromPosition.tie
+//                    )
+//                if (movInsItem.exToPosition)
+//                    moveInfo.exToPosition = new UnitPosition(
+//                            movInsItem.exToPosition.area,
+//                            movInsItem.exToPosition.bay,
+//                            movInsItem.exToPosition.lay,
+//                            movInsItem.exToPosition.tie
+//                    )
                 if (movInsItem.acFromPosition)
                     moveInfo.acFromPosition = new UnitPosition(
                             movInsItem.acFromPosition.area,
