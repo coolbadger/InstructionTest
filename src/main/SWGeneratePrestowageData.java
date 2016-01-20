@@ -5,10 +5,7 @@ import importData.PreStowageInfo;
 
 import javax.swing.*;
 import java.lang.reflect.Array;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by leko on 2016/1/16.
@@ -22,9 +19,12 @@ public class SWGeneratePrestowageData extends SwingWorker {
     private static Integer ROWnum = 10;
     private static ArrayList<PreStowageInfo> preStowageInfoArrayList = new ArrayList<PreStowageInfo>();
     private static List<Integer> movecounts =new ArrayList<Integer>(Arrays.asList(160,0,120,120,0,0,240,260,160,140,0,150,0,142,6));
+    private static HashMap<String,String> records = new HashMap<String, String>();
 
     @Override
     protected Object doInBackground() throws Exception {
+        preStowageInfoArrayList.clear();
+        records.clear();
         System.out.println("开始生成预配信息");
         {
             Integer[] a1={1,100,60};                        //第1个舱有100个大箱60个小箱
@@ -79,7 +79,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
                             if (VTRTIERNO>=82){
                                 MOVEORDER = MOVEORDER + moveorderchange[k-1];
                             }
-                            System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
+                            //System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
                             newPrestowageInfo = new PreStowageInfo();
                             newPrestowageInfo.setVHT_ID(VHTID);
                             newPrestowageInfo.setVBY_BAYID(VBYBAYID);
@@ -89,6 +89,9 @@ public class SWGeneratePrestowageData extends SwingWorker {
                             newPrestowageInfo.setGROUP_ID(GROUPID);
                             newPrestowageInfo.setWEIGHT(WEIGHT);
                             newPrestowageInfo.setMOVE_ORDER(MOVEORDER);
+                            String a=VHTID.toString()+MOVEORDER.toString();
+                            String b=VHTID.toString()+"."+VBYBAYID.toString()+"."+VTRTIERNO.toString()+"."+VRWROWNO.toString();
+                            records.put(a,b);
                             preStowageInfoArrayList.add(newPrestowageInfo);
                         }
                     }
@@ -119,7 +122,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
                     if (VTRTIERNO>=82){
                         MOVEORDER = MOVEORDER + moveorderchange[k-1];
                     }
-                    System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
+                    //System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
                     newPrestowageInfo = new PreStowageInfo();
                     newPrestowageInfo.setVHT_ID(VHTID);
                     newPrestowageInfo.setVBY_BAYID(VBYBAYID);
@@ -129,12 +132,15 @@ public class SWGeneratePrestowageData extends SwingWorker {
                     newPrestowageInfo.setGROUP_ID(GROUPID);
                     newPrestowageInfo.setWEIGHT(WEIGHT);
                     newPrestowageInfo.setMOVE_ORDER(MOVEORDER);
+                    String a=VHTID.toString()+MOVEORDER.toString();
+                    String b=VHTID.toString()+"."+VBYBAYID.toString()+"."+VTRTIERNO.toString()+"."+VRWROWNO.toString();
+                    records.put(a,b);
                     preStowageInfoArrayList.add(newPrestowageInfo);
                 }
             }
             for (Integer j=TIERnum1;j<TIERnum;j++)
             {
-                System.out.println("放置大箱");
+                //System.out.println("放置大箱");
                 Integer VTRTIERNO = tier[j];       //层号
                 {
                     for (Integer k=1;k<=10;k++)
@@ -154,7 +160,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
                                 MOVEORDER = MOVEORDER +moveorderchange2[last];
                             }
                         }
-                        System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
+                        //System.out.println(VHTID+" "+VBYBAYID+" "+VTRTIERNO+" "+VRWROWNO+" "+SIZE+" "+GROUPID+" "+WEIGHT+ " "+MOVEORDER);
                         newPrestowageInfo = new PreStowageInfo();
                         newPrestowageInfo.setVHT_ID(VHTID);
                         newPrestowageInfo.setVBY_BAYID(VBYBAYID);
@@ -164,6 +170,9 @@ public class SWGeneratePrestowageData extends SwingWorker {
                         newPrestowageInfo.setGROUP_ID(GROUPID);
                         newPrestowageInfo.setWEIGHT(WEIGHT);
                         newPrestowageInfo.setMOVE_ORDER(MOVEORDER);
+                        String a=VHTID.toString()+MOVEORDER.toString();
+                        String b=VHTID.toString()+"."+VBYBAYID.toString()+"."+VTRTIERNO.toString()+"."+VRWROWNO.toString();
+                        records.put(a,b);
                         preStowageInfoArrayList.add(newPrestowageInfo);
                     }
                 }
@@ -171,6 +180,15 @@ public class SWGeneratePrestowageData extends SwingWorker {
         }
         ImportData.preStowageInfoArrayList = preStowageInfoArrayList;
         ImportData.movecounts = movecounts;
+        ImportData.moveorderrecords = records;
+        //调试信息
+//        Iterator iter = records.entrySet().iterator();
+//        while (iter.hasNext()) {
+//            Map.Entry entry = (Map.Entry) iter.next();
+//            Object key = entry.getKey();
+//            Object val = entry.getValue();
+//            System.out.println(key+"  "+val);
+//        }
         System.out.print("结束生成预配信息");
         return null;
     }
