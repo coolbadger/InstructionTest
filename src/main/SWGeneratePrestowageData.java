@@ -21,7 +21,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
     private static Integer[] moveorderchange2={0,-5,-4,-4,-3,-3,-2,-2,-1,-1,0};
     private static Integer ROWnum = 10;
     private static ArrayList<PreStowageInfo> preStowageInfoArrayList = new ArrayList<PreStowageInfo>();
-    private static List<Integer> movecounts =new ArrayList<Integer>(Arrays.asList(160,0,120,120,0,0,240,260,160,140,0,150,0,148,0));
+    private static List<Integer> movecounts =new ArrayList<Integer>(Arrays.asList(160,0,120,120,0,0,240,260,160,140,0,150,0,142,6));
 
     @Override
     protected Object doInBackground() throws Exception {
