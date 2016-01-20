@@ -37,4 +37,6 @@ public class ImportData {
 
     public static String cwpResult;//保存cwp算法结果
     public static List<CwpResultInfo> cwpResultInfoList;//解析后用List保存cwp算法结果
+
+    public static List<AutostowInfo> autostowInfoList;//自动配载结果
 }

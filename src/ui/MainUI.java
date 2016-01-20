@@ -19,7 +19,8 @@ import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.List;
 import javax.swing.border.TitledBorder;
-import javax.swing.table.*;
+import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableRowSorter;
 import javax.swing.filechooser.FileFilter;
 
 public class MainUI extends JFrame {
@@ -368,25 +369,15 @@ public class MainUI extends JFrame {
 					this.stowage.addActionListener(new ActionListener() {
 						@Override
 						public void actionPerformed(ActionEvent e) {
-							if(GroupData.getGroupMap() != null) {
-								if(ImportData.cwpResultInfoList != null) {
-									setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
-									final SWGenerateAutostowData swGenerateAutostowData = new SWGenerateAutostowData(){
-										@Override
-										protected void done() {
-											super.done();
-											setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//设置鼠标正常
-										}
-									};
-									swGenerateAutostowData.run();
-								} else {
-									JOptionPane.showMessageDialog(MainUI.this, "请先成功调用cwp算法!",
-											"提示", JOptionPane.INFORMATION_MESSAGE);
+							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标忙
+							final SWGenerateAutostowData swGenerateAutostowData = new SWGenerateAutostowData(){
+								@Override
+								protected void done() {
+									super.done();
+									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//设置鼠标正常
 								}
-							} else {
-								JOptionPane.showMessageDialog(MainUI.this, "请先生成属性组!",
-										"提示", JOptionPane.INFORMATION_MESSAGE);
-							}
+							};
+							swGenerateAutostowData.run();
 						}
 
 					});
@@ -549,11 +540,12 @@ public class MainUI extends JFrame {
 						tableModel.addColumn(col);
 					}
 
+
+
 					this.tableWQL.setModel(tableModel);
 //					this.tableWQL.setRowSorter(new TableRowSorter(tableModel));
 					//针对特殊的列设置排序器
 					TableRowSorter tableRowSorter = new TableRowSorter(tableModel);
-
 					tableRowSorter.setComparator(tableWQL.getColumn("gkey").getModelIndex(), new Comparator<String>() {
 						@Override
 						public int compare(String o1, String o2) {
@@ -574,39 +566,12 @@ public class MainUI extends JFrame {
 							}
 						}
 					});
-
-					Comparator<Number> numberComparator = new Comparator<Number>() {
-						@Override
-						public int compare(Number o1, Number o2) {
-							if ( o1 == null ) {
-								return -1;
-							}
-							if ( o2 == null ) {
-								return 1;
-							}
-							if ( o1.doubleValue() < o2.doubleValue() ) {
-								return -1;
-							}
-							if ( o1.doubleValue() > o2.doubleValue() ) {
-								return -1;
-							}
-							return 0;
-						}
-					};
-
-					tableRowSorter.setComparator(tableWQL.getColumn("moveId").getModelIndex(), numberComparator);
-
-					tableRowSorter.setComparator(tableWQL.getColumn("WORKINGSTARTTIME").getModelIndex(), numberComparator);
-
+					//tableRowSorter.setComparator();
 					tableWQL.setRowSorter(tableRowSorter);
 					//设置默认排序
 					RowSorter.SortKey sortKey = new RowSorter.SortKey(tableWQL.getColumn("gkey").getModelIndex(),SortOrder.ASCENDING);
-					RowSorter.SortKey sortKey1 = new RowSorter.SortKey(tableWQL.getColumn("moveId").getModelIndex(),SortOrder.ASCENDING);
-					RowSorter.SortKey sortKey2 = new RowSorter.SortKey(tableWQL.getColumn("WORKINGSTARTTIME").getModelIndex(),SortOrder.ASCENDING);
 					List<RowSorter.SortKey> sortKeyList = new ArrayList<RowSorter.SortKey>();
 					sortKeyList.add(sortKey);
-					sortKeyList.add(sortKey1);
-					sortKeyList.add(sortKey2);
 					tableRowSorter.setSortKeys(sortKeyList);
 					tableRowSorter.setSortsOnUpdates(true);
 				}
@@ -618,7 +583,6 @@ public class MainUI extends JFrame {
 			public void globalDataChanged() {
 				System.out.println("检测到全局数据变化，更新表格");
 				DefaultTableModel tableModel = (DefaultTableModel) tableWQL.getModel();
-
 				while (tableModel.getRowCount() > 0) {//清除表格中已有数据
 					tableModel.removeRow(tableModel.getRowCount() - 1);
 				}
