@@ -15,8 +15,8 @@ import java.util.List;
  */
 public class SWGenerateWorkMoveData extends SwingWorker {
 
-    private static List<WorkMoveInfo> workMoveInfoList = new ArrayList<WorkMoveInfo>();
-    private static HashMap<String,Integer> baypos = new HashMap<String, Integer>();
+    private List<WorkMoveInfo> workMoveInfoList = new ArrayList<WorkMoveInfo>();
+    private HashMap<String,Integer> baypos = new HashMap<String, Integer>();
 
     @Override
     protected Object doInBackground() throws Exception {

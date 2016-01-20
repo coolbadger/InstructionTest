@@ -59,8 +59,8 @@ public class MoveorderFrame extends JFrame{
                 {
                     this.tableWQL = new JTable();
                     this.scrollPane.setViewportView(this.tableWQL);
-                    DefaultTableModel tableModel = new DefaultTableModel();
-
+//                    DefaultTableModel tableModel = new DefaultTableModel();
+                    ui.TableModel tableModel = new ui.TableModel();
                     //增加列名
                     ArrayList<String> colList = new ArrayList<String>(Arrays.asList("舱位ID","倍位ID", "层号", "排号","作业序列"));
                     for (String col : colList) {

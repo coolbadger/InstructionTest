@@ -12,7 +12,7 @@ import java.util.List;
  */
 public class SWGenerateHatchData extends SwingWorker {
 
-    private static List<HatchInfo> hatchInfoList = new ArrayList<HatchInfo>();
+    List<HatchInfo> hatchInfoList = new ArrayList<HatchInfo>();
 
     @Override
     protected Object doInBackground() throws Exception {
