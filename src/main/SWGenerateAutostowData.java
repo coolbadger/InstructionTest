@@ -94,14 +94,14 @@ public class SWGenerateAutostowData extends SwingWorker {
             temp+=cwpResultInfo.getWORKINGSTARTTIME().toString()+"#";
             cwpoutput+=temp;
         }
-//        try {
-//            FileUtil.writeToFile("E:/Containerarea.txt", containerarea);
-//            FileUtil.writeToFile("E:/Container.txt", container);
-//            FileUtil.writeToFile("E:/Prestowage.txt", prestowage);
-//            FileUtil.writeToFile("E:/Cwpoutput.txt", cwpoutput);
-//        } catch (Exception e1) {
-//            e1.printStackTrace();
-//        }
+        try {
+            FileUtil.writeToFile("E:/Containerarea.txt", containerarea);
+            FileUtil.writeToFile("E:/Container.txt", container);
+            FileUtil.writeToFile("E:/Prestowage.txt", prestowage);
+            FileUtil.writeToFile("E:/Cwpoutput.txt", cwpoutput);
+        } catch (Exception e1) {
+            e1.printStackTrace();
+        }
         return null;
     }
 }
