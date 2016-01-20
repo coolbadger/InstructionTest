@@ -184,6 +184,8 @@ public class MainUI extends JFrame {
 									@Override
 									protected void done() {
 										super.done();
+										ContainerFrame containerFrame = new ContainerFrame();
+										containerFrame.setVisible(true);
 										setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
 									}
 								};
