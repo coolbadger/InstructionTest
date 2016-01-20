@@ -583,7 +583,6 @@ public class MainUI extends JFrame {
 					};
 
 					tableRowSorter.setComparator(tableWQL.getColumn("moveId").getModelIndex(), numberComparator);
-
 					tableRowSorter.setComparator(tableWQL.getColumn("WORKINGSTARTTIME").getModelIndex(), numberComparator);
 
 					tableWQL.setRowSorter(tableRowSorter);
