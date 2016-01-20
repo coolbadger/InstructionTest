@@ -6,7 +6,7 @@ package importData;
 public class CwpResultInfo {
 
     private String CRANEID;
-    private String EndMoveID;
+    private Integer EndMoveID;
     private Integer HATCHBWID;
     private String HATCHID;
     private Integer MOVECOUNT;
@@ -24,11 +24,11 @@ public class CwpResultInfo {
         this.CRANEID = CRANEID;
     }
 
-    public String getEndMoveID() {
+    public Integer getEndMoveID() {
         return EndMoveID;
     }
 
-    public void setEndMoveID(String endMoveID) {
+    public void setEndMoveID(Integer endMoveID) {
         EndMoveID = endMoveID;
     }
 

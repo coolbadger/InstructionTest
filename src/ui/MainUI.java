@@ -405,7 +405,15 @@ public class MainUI extends JFrame {
 
 							setCursor(new Cursor(Cursor.WAIT_CURSOR));//设置鼠标正忙
 
-							new SWInitSampleData(){//执行SwingWorker
+//							new SWInitSampleData(){//执行SwingWorker
+//								@Override
+//								protected void done() {
+//									super.done();
+//									setCursor(new Cursor(Cursor.DEFAULT_CURSOR));//结束后设置鼠标为正常状态
+//								}
+//							}.run();
+
+							new SWGenarateResultData(){//执行SwingWorker
 								@Override
 								protected void done() {
 									super.done();

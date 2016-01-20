@@ -19,8 +19,8 @@ public class MoveInfo {
 
     private String unitLength;              //箱长
 
-    private UnitPosition exFromPosition;      //计划提箱位置
-    private UnitPosition exToPosition;       //计划放箱位置
+    private String exFromPosition;      //计划提箱位置
+    private String exToPosition;       //计划放箱位置
     private UnitPosition acFromPosition;     //实际提箱位置
     private UnitPosition acToPosition;       //实际放箱位置
 
@@ -146,19 +146,19 @@ public class MoveInfo {
         this.unitId = unitId;
     }
 
-    public UnitPosition getExFromPosition() {
+    public String getExFromPosition() {
         return exFromPosition;
     }
 
-    public void setExFromPosition(UnitPosition exFromPosition) {
+    public void setExFromPosition(String exFromPosition) {
         this.exFromPosition = exFromPosition;
     }
 
-    public UnitPosition getExToPosition() {
+    public String getExToPosition() {
         return exToPosition;
     }
 
-    public void setExToPosition(UnitPosition exToPosition) {
+    public void setExToPosition(String exToPosition) {
         this.exToPosition = exToPosition;
     }
 
@@ -205,9 +205,7 @@ public class MoveInfo {
         return putCHE;
     }
 
-    public void setPutCHE(String putCHE) {
-        this.putCHE = putCHE;
-    }
+    public void setPutCHE(String putCHE) { this.putCHE = putCHE;    }
 
     public Date getDispatchTime() {
         return dispatchTime;
