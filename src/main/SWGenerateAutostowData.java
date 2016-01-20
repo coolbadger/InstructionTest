@@ -65,23 +65,23 @@ public class SWGenerateAutostowData extends SwingWorker {
             prestowage+=preStowageInfo.getMOVE_ORDER().toString()+"#";
         }
         //生成cwp输出结果
-//        cwpoutput="";
-//        for (CwpResultInfo cwpResultInfo:ImportData.cwpResultInfoList)
-//        {
-//            cwpoutput+=cwpResultInfo.getCRANEID().toString()+",";
-//            cwpoutput+=cwpResultInfo.getHATCHBWID().toString()+",";
-//            cwpoutput+=cwpResultInfo.getHATCHID().toString()+",";
-//            cwpoutput+=cwpResultInfo.getMOVECOUNT().toString()+",";
-//            cwpoutput+=cwpResultInfo.getQDC().toString()+",";
-//            cwpoutput+=cwpResultInfo.getVESSELID().toString()+",";
-//            cwpoutput+=cwpResultInfo.getWORKINGENDTIME().toString()+",";
-//            cwpoutput+=cwpResultInfo.getWORKINGSTARTTIME().toString()+"#";
-//        }
+        cwpoutput="";
+        for (CwpResultInfo cwpResultInfo:ImportData.cwpResultInfoList)
+        {
+            cwpoutput+=cwpResultInfo.getCRANEID().toString()+",";
+            cwpoutput+=cwpResultInfo.getHATCHBWID().toString()+",";
+            cwpoutput+=cwpResultInfo.getHATCHID().toString()+",";
+            cwpoutput+=cwpResultInfo.getMOVECOUNT().toString()+",";
+            cwpoutput+=cwpResultInfo.getQDC().toString()+",";
+            cwpoutput+=cwpResultInfo.getVESSELID().toString()+",";
+            cwpoutput+=cwpResultInfo.getWORKINGENDTIME().toString()+",";
+            cwpoutput+=cwpResultInfo.getWORKINGSTARTTIME().toString()+"#";
+        }
         try {
             FileUtil.writeToFile("E:/Containerarea.txt", containerarea);
             FileUtil.writeToFile("E:/Container.txt", container);
             FileUtil.writeToFile("E:/Prestowage.txt", prestowage);
-           // FileUtil.writeToFile("E:/Cwpoutput.txt", cwpoutput);
+            FileUtil.writeToFile("E:/Cwpoutput.txt", cwpoutput);
         } catch (Exception e1) {
             e1.printStackTrace();
         }
