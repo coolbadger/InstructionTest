@@ -12,6 +12,7 @@ public class MoveInfo {
 
 
     private String gkey;                    //唯一编号
+    private Integer WORKINGSTARTTIME;     //开始时间
     private String batchId;                 //作业批次号
     private int moveId;                     //作业编号
     private String moveKind;                //作业类型
@@ -247,5 +248,11 @@ public class MoveInfo {
         this.state = state;
     }
 
+    public Integer getWORKINGSTARTTIME() {
+        return WORKINGSTARTTIME;
+    }
 
+    public void setWORKINGSTARTTIME(Integer WORKINGSTARTTIME) {
+        this.WORKINGSTARTTIME = WORKINGSTARTTIME;
+    }
 }

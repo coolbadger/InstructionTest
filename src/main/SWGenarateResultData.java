@@ -41,10 +41,13 @@ public class SWGenarateResultData extends SwingWorker{
                 String craneID = cwpResultInfo.getCRANEID();
                 String hatchID = cwpResultInfo.getHATCHID();
                 Integer startmoveorder = cwpResultInfo.getStartMoveID();
-                //System.out.println("start"+startmoveorder.toString());
+                System.out.println("start"+startmoveorder.toString());
                 Integer endmoveorder = cwpResultInfo.getEndMoveID()-1;
                 Integer cnt = movecounts.get(Integer.valueOf(hatchID)-1);
-                //System.out.println("end"+endmoveorder.toString());
+                System.out.println("end"+endmoveorder.toString());
+                Integer starttime = cwpResultInfo.getWORKINGSTARTTIME();
+                Integer endtime = cwpResultInfo.getWORKINGENDTIME();
+                Integer singletime = (endtime-starttime)/cwpResultInfo.getMOVECOUNT();
                 for (int i=startmoveorder;i<=endmoveorder && i<=cnt;i++)
                 {
                     //System.out.println("新生成一条数据");
@@ -58,6 +61,7 @@ public class SWGenarateResultData extends SwingWorker{
                     String hatchmoveorder = hatchID+String.valueOf(i);
                     //System.out.println("moveorder:"+hatchmoveorder);
                     moveInfo.setExToPosition(moverecords.get(hatchmoveorder));
+                    moveInfo.setWORKINGSTARTTIME(starttime+singletime*(i-startmoveorder));
                     result.add(moveInfo);
 
                 }
