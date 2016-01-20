@@ -91,7 +91,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
                             newPrestowageInfo.setGROUP_ID(GROUPID);
                             newPrestowageInfo.setWEIGHT(WEIGHT);
                             newPrestowageInfo.setMOVE_ORDER(MOVEORDER);
-                            String a=VHTID.toString()+MOVEORDER.toString();
+                            String a=VHTID.toString()+"."+MOVEORDER.toString();
                             String b=VHTID.toString()+"."+VBYBAYID.toString()+"."+VTRTIERNO.toString()+"."+VRWROWNO.toString();
                             records.put(a,b);
                             preStowageInfoArrayList.add(newPrestowageInfo);
@@ -134,7 +134,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
                     newPrestowageInfo.setGROUP_ID(GROUPID);
                     newPrestowageInfo.setWEIGHT(WEIGHT);
                     newPrestowageInfo.setMOVE_ORDER(MOVEORDER);
-                    String a=VHTID.toString()+MOVEORDER.toString();
+                    String a=VHTID.toString()+"."+MOVEORDER.toString();
                     String b=VHTID.toString()+"."+VBYBAYID.toString()+"."+VTRTIERNO.toString()+"."+VRWROWNO.toString();
                     records.put(a,b);
                     preStowageInfoArrayList.add(newPrestowageInfo);
@@ -172,7 +172,7 @@ public class SWGeneratePrestowageData extends SwingWorker {
                         newPrestowageInfo.setGROUP_ID(GROUPID);
                         newPrestowageInfo.setWEIGHT(WEIGHT);
                         newPrestowageInfo.setMOVE_ORDER(MOVEORDER);
-                        String a=VHTID.toString()+MOVEORDER.toString();
+                        String a=VHTID.toString()+"."+MOVEORDER.toString();
                         String b=VHTID.toString()+"."+VBYBAYID.toString()+"."+VTRTIERNO.toString()+"."+VRWROWNO.toString();
                         records.put(a,b);
                         preStowageInfoArrayList.add(newPrestowageInfo);
@@ -184,13 +184,13 @@ public class SWGeneratePrestowageData extends SwingWorker {
         ImportData.movecounts = movecounts;
         ImportData.moveorderrecords = records;
         //调试信息
-//        Iterator iter = records.entrySet().iterator();
-//        while (iter.hasNext()) {
-//            Map.Entry entry = (Map.Entry) iter.next();
-//            Object key = entry.getKey();
-//            Object val = entry.getValue();
-//            System.out.println(key+"  "+val);
-//        }
+        Iterator iter = records.entrySet().iterator();
+        while (iter.hasNext()) {
+            Map.Entry entry = (Map.Entry) iter.next();
+            Object key = entry.getKey();
+            Object val = entry.getValue();
+            System.out.println(key+"  "+val);
+        }
         System.out.print("结束生成预配信息");
         return null;
     }

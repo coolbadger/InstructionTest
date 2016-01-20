@@ -38,12 +38,12 @@ public class SWGenarateResultData extends SwingWorker{
         {
             try {
                 //System.out.println("开始：");
-                String craneID = cwpResultInfo.getCRANEID();
-                String hatchID = cwpResultInfo.getHATCHID();
-                Integer startmoveorder = cwpResultInfo.getStartMoveID();
+                String craneID = cwpResultInfo.getCRANEID();                //桥机号
+                String hatchID = cwpResultInfo.getHATCHID();                //舱号
+                Integer startmoveorder = cwpResultInfo.getStartMoveID();        //舱内开始的moveorder
                 System.out.println("start"+startmoveorder.toString());
-                Integer endmoveorder = cwpResultInfo.getEndMoveID()-1;
-                Integer cnt = movecounts.get(Integer.valueOf(hatchID)-1);
+                Integer endmoveorder = cwpResultInfo.getEndMoveID()-1;          //舱内结束的moveorder
+                Integer cnt = movecounts.get(Integer.valueOf(hatchID)-1);       //舱里共多少箱子
                 System.out.println("end"+endmoveorder.toString());
                 Integer starttime = cwpResultInfo.getWORKINGSTARTTIME();
                 Integer endtime = cwpResultInfo.getWORKINGENDTIME();
@@ -52,13 +52,13 @@ public class SWGenarateResultData extends SwingWorker{
                 {
                     //System.out.println("新生成一条数据");
                     moveInfo = new MoveInfo();
-                    moveInfo.setBatchId(craneID);
+                    moveInfo.setBatchId(craneID);               //批号为桥机号
                     //System.out.println("桥机号"+ moveInfo.getBatchId());
                     moveInfo.setMoveKind("Load");
-                    Integer moveID = crane.get(craneID)+i-startmoveorder+1;
+                    Integer moveID = crane.get(craneID)+i-startmoveorder+1;     //桥机的move序列
                     moveInfo.setMoveId(moveID);
                     moveInfo.setGkey(craneID+"@"+moveID.toString());
-                    String hatchmoveorder = hatchID+String.valueOf(i);
+                    String hatchmoveorder = hatchID+"."+String.valueOf(i);          //舱号连接编号
                     //System.out.println("moveorder:"+hatchmoveorder);
                     moveInfo.setExToPosition(moverecords.get(hatchmoveorder));
                     moveInfo.setWORKINGSTARTTIME(starttime+singletime*(i-startmoveorder));
@@ -71,9 +71,9 @@ public class SWGenarateResultData extends SwingWorker{
                 e.printStackTrace();
             }
         }
-        for (MoveInfo moveInfo1:result){
-            System.out.println(moveInfo1.getGkey()+" "+moveInfo1.getExToPosition());
-        }
+//        for (MoveInfo moveInfo1:result){
+//            System.out.println(moveInfo1.getGkey()+" "+moveInfo1.getExToPosition());
+//        }
         GlobalData.setGlobalMoveinfoList(result);
         return null;
     }
