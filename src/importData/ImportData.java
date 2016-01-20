@@ -20,6 +20,7 @@ public class ImportData {
 
     public static HashMap<String, ArrayList<String>> groupmap;//属性组信息
     public static ArrayList<PreStowageInfo> preStowageInfoArrayList; //预配图数据及moveorder数据
+    public static HashMap<String,String> moveorderrecords;      //舱和moveorder确定具体位置
     public static List<Integer> movecounts;     //每个舱move数
 
     public static List<VoyageInfo> voyageInfoList;//航次信息

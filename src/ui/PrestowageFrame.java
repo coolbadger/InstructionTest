@@ -82,7 +82,7 @@ public class PrestowageFrame extends JFrame {
                         rowData[4] = preStowageInfo.getSIZE();
                         rowData[5] = preStowageInfo.getGROUP_ID();
                         rowData[6] = preStowageInfo.getWEIGHT();
-                        System.out.println(rowData[0]+" "+rowData[1]+" "+rowData[2]+" "+rowData[3]);
+                        //System.out.println(rowData[0]+" "+rowData[1]+" "+rowData[2]+" "+rowData[3]);
                         tableModel.addRow(rowData);
                     }
                     this.tableWQL.setModel(tableModel);
