@@ -13,15 +13,17 @@ import java.util.List;
  * Created by leko on 2016/1/20.
  */
 public class SWGenarateResultData extends SwingWorker{
-    private static List<MoveInfo> reault = new ArrayList<MoveInfo>();
+    private static List<MoveInfo> result = new ArrayList<MoveInfo>();
     private static HashMap<String,Integer> crane = new HashMap<String, Integer>();
     //private static Integer[] hatch;
     private static HashMap<String,String> moverecords;          //根据舱和order定位位置
+    private static List<Integer> movecounts;     //每个舱move数
+
 
     @Override
     protected Object doInBackground() throws Exception {
         System.out.println("开始执行：");
-        reault.clear();
+        result.clear();
         crane.clear();
 //        for (int i=0;i<16;i++)
 //            hatch[i]=0;
@@ -29,42 +31,46 @@ public class SWGenarateResultData extends SwingWorker{
             crane.put("Q80"+String.valueOf(i),0);
 
         moverecords = ImportData.moveorderrecords;
+        movecounts = ImportData.movecounts;
         MoveInfo moveInfo;
         List<CwpResultInfo> cwpResultInfoList = ImportData.cwpResultInfoList;
         for (CwpResultInfo cwpResultInfo: cwpResultInfoList)
         {
-            Integer startmoveorder = cwpResultInfo.getStartMoveID();
-            System.out.println(startmoveorder);
-            Integer endmoveorder = cwpResultInfo.getEndMoveID();
-            System.out.println(endmoveorder);
-            String craneID = cwpResultInfo.getCRANEID();
-            for (int i=startmoveorder;i<=endmoveorder;i++)
-            {
-                try{
-                    System.out.println("start");
+            try {
+                //System.out.println("开始：");
+                String craneID = cwpResultInfo.getCRANEID();
+                String hatchID = cwpResultInfo.getHATCHID();
+                Integer startmoveorder = cwpResultInfo.getStartMoveID();
+                //System.out.println("start"+startmoveorder.toString());
+                Integer endmoveorder = cwpResultInfo.getEndMoveID()-1;
+                Integer cnt = movecounts.get(Integer.valueOf(hatchID)-1);
+                //System.out.println("end"+endmoveorder.toString());
+                for (int i=startmoveorder;i<=endmoveorder && i<=cnt;i++)
+                {
+                    //System.out.println("新生成一条数据");
                     moveInfo = new MoveInfo();
                     moveInfo.setBatchId(craneID);
-                    System.out.println(craneID + " " + moveInfo.getBatchId());
+                    //System.out.println("桥机号"+ moveInfo.getBatchId());
                     moveInfo.setMoveKind("Load");
                     Integer moveID = crane.get(craneID)+i-startmoveorder+1;
                     moveInfo.setMoveId(moveID);
-                    moveInfo.setGkey(craneID+moveID.toString());
-                    String hatchmoveorder = cwpResultInfo.getHATCHID()+String.valueOf(i);
-                    System.out.println(hatchmoveorder);
+                    moveInfo.setGkey(craneID+"@"+moveID.toString());
+                    String hatchmoveorder = hatchID+String.valueOf(i);
+                    //System.out.println("moveorder:"+hatchmoveorder);
                     moveInfo.setExToPosition(moverecords.get(hatchmoveorder));
-                    System.out.println(moveInfo.getGkey()+" "+moveInfo.getExToPosition());
-                    reault.add(moveInfo);
-                }
-                catch (Exception e){
-                    e.printStackTrace();
-                }
+                    result.add(moveInfo);
 
-
+                }
+                crane.put(craneID, crane.get(craneID) + cwpResultInfo.getMOVECOUNT());
             }
-            crane.put(craneID, crane.get(craneID) + cwpResultInfo.getMOVECOUNT());
+            catch (Exception e){
+                e.printStackTrace();
+            }
         }
-        System.out.println(reault.get(0).getGkey()+"----"+reault.get(0).getExFromPosition());
-        GlobalData.setGlobalMoveinfoList(reault);
+        for (MoveInfo moveInfo1:result){
+            System.out.println(moveInfo1.getGkey()+" "+moveInfo1.getExToPosition());
+        }
+        GlobalData.setGlobalMoveinfoList(result);
         return null;
     }
 }
