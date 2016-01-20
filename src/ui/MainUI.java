@@ -575,22 +575,10 @@ public class MainUI extends JFrame {
 						}
 					});
 
-					Comparator<Number> numberComparator = new Comparator<Number>() {
+					Comparator<Integer> numberComparator = new Comparator<Integer>() {
 						@Override
-						public int compare(Number o1, Number o2) {
-							if ( o1 == null ) {
-								return -1;
-							}
-							if ( o2 == null ) {
-								return 1;
-							}
-							if ( o1.doubleValue() < o2.doubleValue() ) {
-								return -1;
-							}
-							if ( o1.doubleValue() > o2.doubleValue() ) {
-								return -1;
-							}
-							return 0;
+						public int compare(Integer o1, Integer o2) {//
+							return o1 - o2;
 						}
 					};
 
