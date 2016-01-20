@@ -587,7 +587,7 @@ public class MainUI extends JFrame {
 					tableRowSorter.setComparator(tableWQL.getColumn("WORKINGSTARTTIME").getModelIndex(), numberComparator);
 
 					tableWQL.setRowSorter(tableRowSorter);
-					//设置默认排序
+					//设置排序属性
 					RowSorter.SortKey sortKey = new RowSorter.SortKey(tableWQL.getColumn("gkey").getModelIndex(),SortOrder.ASCENDING);
 					RowSorter.SortKey sortKey1 = new RowSorter.SortKey(tableWQL.getColumn("moveId").getModelIndex(),SortOrder.ASCENDING);
 					RowSorter.SortKey sortKey2 = new RowSorter.SortKey(tableWQL.getColumn("WORKINGSTARTTIME").getModelIndex(),SortOrder.ASCENDING);
