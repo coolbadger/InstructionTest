@@ -1,8 +1,6 @@
 package ui;
 
-import importData.AutostowInfo;
 import importData.ImportData;
-import utils.FileUtil;
 
 import javax.swing.*;
 import javax.swing.border.TitledBorder;
@@ -53,15 +51,18 @@ public class AutostowFrame extends JFrame {
                         }
 
                         //增加内容
-                        java.util.List<AutostowInfo> autostowInfoList = ImportData.autostowInfoList;
+                        HashMap<String,String[]> autostowresult = ImportData.autostowresult;
                         System.out.print("生成内容");
-                        if (autostowInfoList!=null) {
-                            for (AutostowInfo autostowInfo : autostowInfoList) {
+                        if (autostowresult!=null) {
+                            Iterator iter = autostowresult.entrySet().iterator();
+                            while (iter.hasNext()) {
                                 Object[] rowData = new Object[4];
-                                rowData[0] = autostowInfo.getUnitID();
-                                rowData[1] = autostowInfo.getCsize();
-                                rowData[2] = autostowInfo.getAreaposition();
-                                rowData[3] = autostowInfo.getVesselposition();
+                                Map.Entry entry = (Map.Entry) iter.next();
+                                String key = entry.getKey().toString();
+                                rowData[0] = autostowresult.get(key)[1];
+                                rowData[1] = autostowresult.get(key)[2];
+                                rowData[2] = autostowresult.get(key)[0];
+                                rowData[3] = key;
                                 tableModel.addRow(rowData);
                             }
                         }
