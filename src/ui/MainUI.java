@@ -26,12 +26,13 @@ public class MainUI extends JFrame {
 
 	private JPanel contentPane;
 	private JMenuBar menuBar;
-	private JMenu menu1,menu2,menu3,menu4;
+	private JMenu menu1,menu2,menu3,menu4,menu5;
 	private JMenuItem menuItemExit;
 	private JMenuItem voyage,shipstructure,crane,container,containerarea,others;
 	private JMenuItem groups,prestowage,moveorder;
 	private JMenuItem cwp,stowage;
 	private JMenuItem menuItemImportSampleData;
+	private JMenuItem showVesselImage;
 	private JPanel panelNorth;
 	private JPanel panelCenter;
 	private JTable tableWQL;
@@ -436,6 +437,22 @@ public class MainUI extends JFrame {
 						}
 					});
 					this.menu4.add(this.menuItemImportSampleData);
+				}
+
+				this.menu5 = new JMenu("概图");
+				this.menuBar.add(this.menu5);
+				{
+					this.showVesselImage = new JMenuItem("船舶概图");
+					this.showVesselImage.addActionListener(new ActionListener() {
+						@Override
+						public void actionPerformed(ActionEvent e) {
+//							ImportData.vesselStructureInfoList
+							List<VesselStructureInfo> vesselStructureInfos = ImportData.vesselStructureInfoList;
+							VesselImageFrame vesselImageFrame = new VesselImageFrame();
+							vesselImageFrame.setVisible(true);
+						}
+					});
+					this.menu5.add(showVesselImage);
 				}
 			}
 		}
