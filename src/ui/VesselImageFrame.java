@@ -22,12 +22,11 @@ public class VesselImageFrame extends JFrame {
     private JTextField textField;
     private JButton button;
     private int MaxTierUnderForDrawBoat = 0;//用来统计甲板下集装箱的最大层数以便于画船体
-    private int MacTierAboveForDrawString = 0;//用来统计甲板下集装箱的最大层数以便于写集装箱上方的文字
+    private int MaxTierAboveForDrawString = 0;//用来统计甲板下集装箱的最大层数以便于写集装箱上方的文字
     private int bayCount;   //倍数
     int boxWidth = 30; //集装箱宽度固定值40
     int boxHeight =  15;   //集装箱高度就是15
     int gap = 15; //倍之间的间隔
-    int scrollwidth;
     //船体四个点的坐标(程序中对四个点进行过更新)
      int[] SHIPX={20,150,1150,1280};
      int[] SHIPY={200,450,450,200};
@@ -48,6 +47,7 @@ public class VesselImageFrame extends JFrame {
         this.setSize(1400,800);
         this.setLocationRelativeTo(null);
 
+        //读取数据
         java.util.List<VesselStructureInfo> vesselStructureInfos = ImportData.vesselStructureInfoList;
         Integer[] rowData = new Integer[3];
         for (VesselStructureInfo vesselStructureInfo : vesselStructureInfos) {
@@ -66,17 +66,17 @@ public class VesselImageFrame extends JFrame {
                 if(!MaxTierAbove.containsKey(rowData[0]) ||MaxTierAbove.get(rowData[0]) < rowData[1]){
                     MaxTierAbove.put(rowData[0], (rowData[1]-80)/2);
                 }
-                if(MacTierAboveForDrawString < (rowData[1]-80)/2) MacTierAboveForDrawString = (rowData[1]-80)/2;
+                if(MaxTierAboveForDrawString < (rowData[1]-80)/2) MaxTierAboveForDrawString = (rowData[1]-80)/2;
             }
         }
-        bayCount = Bay.size();
+        bayCount = Bay.size();//倍数
+        //更新船的四个点坐标
         SHIPY[0] = SHIPY[1] - (MaxTierUnderForDrawBoat + 3) * 15;
         SHIPY[3] = SHIPY[2] - (MaxTierUnderForDrawBoat + 3) * 15;
-        SHIPX[2] = SHIPX[1] + (bayCount+2)*boxWidth + gap*(bayCount/2);//+2为了有空隙空间
+        SHIPX[2] = SHIPX[1] + (bayCount+2)*boxWidth + gap*(bayCount/2);
         SHIPX[3] = SHIPX[2] +130;
-        scrollwidth = (int)((SHIPX[2]-SHIPX[1])*1.5+gap*(bayCount/2));
 
-
+        //横向滚动条
         JScrollPane scrollPane = new JScrollPane();
         scrollPane.setHorizontalScrollBarPolicy(JScrollPane.HORIZONTAL_SCROLLBAR_ALWAYS);
 
@@ -89,6 +89,7 @@ public class VesselImageFrame extends JFrame {
 
         textField = new JTextField(10);
         textField.setPreferredSize(new Dimension(10,28));
+
         //单击按钮
         button = new JButton("确定");
         {
@@ -144,20 +145,16 @@ public class VesselImageFrame extends JFrame {
         topPanel.add(textField);
         topPanel.add(button);
 
+        //画船和集装箱
         contentPanel = new JPanel();
         DrawContainers drawContainers = new DrawContainers();   //画集装箱
         DrawShip drawShip = new DrawShip();  //画船
-
-        drawContainers.setVisible(true);
         contentPanel.add(drawShip);
         contentPanel.add(drawContainers);
-//        SHIPX[2] = SHIPX[1] + (drawContainers.getbayCount()+2)*boxWidth + gap*(bayCount/2);//+2为了有空隙空间
-//        SHIPX[3] = SHIPX[2] +130;
-//        contentPanel.setPreferredSize(new Dimension(scrollwidth,700));
-        contentPanel.setPreferredSize(new Dimension((int)((SHIPX[2] - SHIPX[1])*1.5),700));
-//        contentPanel.setPreferredSize(new Dimension(1800,600));
+        contentPanel.setPreferredSize(new Dimension((int)((SHIPX[2] - SHIPX[1])*1.5),650));//设置内容panel的大小，从而让滚动条生效
         scrollPane.setViewportView(contentPanel);
 
+        //添加到滚动条panel中
         forScrollPanel = new JPanel();
         forScrollPanel.setLayout(new BorderLayout(10,10));
         forScrollPanel.add("North",topPanel);
@@ -175,7 +172,6 @@ public class VesselImageFrame extends JFrame {
             drawShip.setColor(Color.BLUE); //设置弧形的颜色为黑色
             drawShip.setStroke(new BasicStroke(5)); //船的粗细
 
-//            drawShip.drawPolygon(SHIPX,SHIPY,4);    //画船四边形
             drawShip.drawLine(SHIPX[0],SHIPY[0],SHIPX[3],SHIPY[3]);//画甲板线
             drawShip.drawLine(SHIPX[1],SHIPY[1],SHIPX[2],SHIPY[2]);//画船底线
             QuadCurve2D curveLeft = new QuadCurve2D.Double(SHIPX[0],SHIPY[0],SHIPX[1]+20,SHIPY[1]-100,SHIPX[1],SHIPY[1]);//画船的左侧线条
@@ -187,7 +183,6 @@ public class VesselImageFrame extends JFrame {
             drawShip.drawString("船头",SHIPX[0],SHIPY[1]);
             this.setOpaque(false);  //透明
             this.setBounds(100,100,1500,1500);
-//            this.setPreferredSize(new Dimension((int)((SHIPX[3] - SHIPX[0])*1.5),600));
         }
     }
 
@@ -204,15 +199,11 @@ public class VesselImageFrame extends JFrame {
             this.setBounds(100,100,1500,1500);
             this.setOpaque(false);
 
-
-
-//            int boxWidth = (SHIPX[2] - SHIPX[1]) / (BAYCount + 10); //计算每个集装箱多宽比较合适，+10为了留有一定空隙
-//            int gap = ((SHIPX[2] - SHIPX[1])-boxWidth*BAYCount)/15;
             for(int i = 0 ; i < bayCount;i++) {
                 //添加倍的文字
                 if(i%2==0){
                     drawboxes.drawString(i*2+1+"B",SHIPX[1]+ boxWidth * (i+1) + (i/2)*gap,SHIPY[1] + 20);
-                    drawboxes.drawString(i*2+1+"A",SHIPX[1]+ boxWidth * (i+1) + (i/2)*gap,SHIPY[1]-(MaxTierUnderForDrawBoat + 3)*boxHeight - (MacTierAboveForDrawString + 3) * boxHeight);
+                    drawboxes.drawString(i*2+1+"A",SHIPX[1]+ boxWidth * (i+1) + (i/2)*gap,SHIPY[1]-(MaxTierUnderForDrawBoat + 3)*boxHeight - (MaxTierAboveForDrawString + 3) * boxHeight);
                 }
                 //画集装箱
                 for(int j=0;j<MaxTierUnder.get(i*2+1);j++){

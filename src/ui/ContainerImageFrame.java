@@ -14,7 +14,7 @@ public class ContainerImageFrame extends JFrame{
 
 //    ContainerImageFrame(){initComponents();}
 
-    public void initComponents(int bayID, int rowAbove , int colAbove,int rowUnder,int colUnder){
+    public void initComponents(int bayID, int tierAbove , int colAbove,int tierUnder,int colUnder){
         Container c = getContentPane();
 //        c.add(contentPanel);
         this.setTitle("第"+bayID+"倍倍位概图");
@@ -32,8 +32,8 @@ public class ContainerImageFrame extends JFrame{
         contentPanel.setBorder(BorderFactory.createEmptyBorder(50,50,50,50));
         contentPanel.setSize(new Dimension(900,900));
         //画集装箱
-        DrawContainers drawContainersAbove = new DrawContainers(rowAbove,colAbove,true);
-        DrawContainers drawContainersUnder = new DrawContainers(rowUnder,colUnder,false);
+        DrawContainers drawContainersAbove = new DrawContainers(tierAbove,colAbove,true);
+        DrawContainers drawContainersUnder = new DrawContainers(tierUnder,colUnder,false);
         contentPanel.add(drawContainersAbove);
         contentPanel.add(drawContainersUnder);
 
@@ -51,8 +51,8 @@ public class ContainerImageFrame extends JFrame{
     }
     //画集装箱类
     class DrawContainers extends JPanel{
-        public  DrawContainers(int row,int col,boolean underOrAbove){//underOrAbove用来判断是甲板上下以便于draw排号和层号,true代表甲板上
-            this.setLayout(new GridLayout(row+1,col+1,10,5));
+        public  DrawContainers(int tier,int col,boolean underOrAbove){//underOrAbove用来判断是甲板上下以便于draw排号和层号,true代表甲板上
+            this.setLayout(new GridLayout(tier+1,col+1,10,5));
 
             //生成排数的字符串.偶数放在前面技术放在后面
             StringBuilder stringRes = new StringBuilder("");
@@ -67,26 +67,26 @@ public class ContainerImageFrame extends JFrame{
             }
 
             //画集装箱
-            JButton[][] btn = new JButton[row+1][col+1];
-            for(int i=0;i<=row;i++){
+            JButton[][] btn = new JButton[tier+1][col+1];
+            for(int i=0;i<=tier;i++){
                 for(int j=0;j<=col;j++){
                     btn[i][j] = new JButton();
                     btn[i][j].setPreferredSize(new Dimension(80,40));
                     btn[i][j].setFont(new Font("",Font.BOLD,10));
 
-                    if(i== row && j == 0){
+                    if(i== tier && j == 0){
                         btn[i][j] = new JButton(new String(""));
                         btn[i][j].setContentAreaFilled(false);//jbutton透明
                         btn[i][j].setBorderPainted(false);//jbutton透明
-                    }else if(i == row){
+                    }else if(i == tier){
                         btn[i][j] = new JButton(stringRes.substring(2*(j-1),2*(j-1)+2));
                         btn[i][j].setContentAreaFilled(false);//jbutton透明
                         btn[i][j].setBorderPainted(false);//jbutton透明
                     }else if(j == 0){
                         if(underOrAbove == true){
-                            btn[i][j] = new JButton(new String((row - i)*2+80 + ""));//甲板上的层数
+                            btn[i][j] = new JButton(new String((tier - i)*2+80 + ""));//甲板上的层数
                         }else {
-                            btn[i][j] = new JButton(String.format("%02d",(row - i)*2));//甲板下的层数
+                            btn[i][j] = new JButton(String.format("%02d",(tier - i)*2));//甲板下的层数
                         }
                         btn[i][j].setContentAreaFilled(false);//jbutton透明
                         btn[i][j].setBorderPainted(false);//jbutton透明
