@@ -7,6 +7,8 @@ import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
 import java.awt.geom.QuadCurve2D;
 import java.awt.geom.Rectangle2D;
 import java.util.*;
@@ -70,7 +72,7 @@ public class VesselImageFrame extends JFrame {
             }
         }
         bayCount = Bay.size();//倍数
-        //更新船的四个点坐标
+        //更新船的四个点坐标，为了留有一定空间。进行+2，+3处理
         SHIPY[0] = SHIPY[1] - (MaxTierUnderForDrawBoat + 3) * 15;
         SHIPY[3] = SHIPY[2] - (MaxTierUnderForDrawBoat + 3) * 15;
         SHIPX[2] = SHIPX[1] + (bayCount+2)*boxWidth + gap*(bayCount/2);
@@ -84,11 +86,14 @@ public class VesselImageFrame extends JFrame {
         topPanel = new JPanel();
         topPanel.setLayout(new FlowLayout());
 
-        label = new JLabel("请输入要查询的倍数");
+        label = new JLabel("请输入（或点击）选择要查询的倍数");
         label.setFont(new Font("",0,20));
 
         textField = new JTextField(10);
         textField.setPreferredSize(new Dimension(10,28));
+        textField.setHorizontalAlignment(JTextField.CENTER);
+        textField.setFont(new Font("",0,20));
+        textField.setForeground(Color.BLUE);
 
         //单击按钮
         button = new JButton("确定");
@@ -111,6 +116,7 @@ public class VesselImageFrame extends JFrame {
                         int maxTierAbove = 0;
                         int maxColUnder = 0;
                         int maxColAbove = 0;
+                        //统计选定bay的数据：层和拍
                         for (VesselStructureInfo vesselStructureInfo : vesselStructureInfos) {
                             //                rowData[0] = vesselStructureInfo.getVHTID();      //舱次
                             rowData[0] = vesselStructureInfo.getVBYBAYID();     //倍
@@ -147,6 +153,7 @@ public class VesselImageFrame extends JFrame {
 
         //画船和集装箱
         contentPanel = new JPanel();
+//        contentPanel.setLayout(null);
         DrawContainers drawContainers = new DrawContainers();   //画集装箱
         DrawShip drawShip = new DrawShip();  //画船
         contentPanel.add(drawShip);
@@ -187,7 +194,8 @@ public class VesselImageFrame extends JFrame {
     }
 
     //画集装箱
-    class DrawContainers extends JPanel{
+     class DrawContainers extends JPanel implements MouseListener{
+        Rectangle2D[] rectangle2D = new Rectangle2D[bayCount]; //建立一个数组。用于响应鼠标点击事件
         protected  void  paintComponent(Graphics g){
             super.paintComponent(g);
             Graphics2D drawboxes;
@@ -198,12 +206,15 @@ public class VesselImageFrame extends JFrame {
             drawboxes.setFont(new Font("",Font.BOLD,15));
             this.setBounds(100,100,1500,1500);
             this.setOpaque(false);
+            this.addMouseListener(this);//添加鼠标点击监控
 
+            //画集装箱，添加文字
             for(int i = 0 ; i < bayCount;i++) {
                 //添加倍的文字
                 if(i%2==0){
                     drawboxes.drawString(i*2+1+"B",SHIPX[1]+ boxWidth * (i+1) + (i/2)*gap,SHIPY[1] + 20);
                     drawboxes.drawString(i*2+1+"A",SHIPX[1]+ boxWidth * (i+1) + (i/2)*gap,SHIPY[1]-(MaxTierUnderForDrawBoat + 3)*boxHeight - (MaxTierAboveForDrawString + 3) * boxHeight);
+
                 }
                 //画集装箱
                 for(int j=0;j<MaxTierUnder.get(i*2+1);j++){
@@ -215,7 +226,39 @@ public class VesselImageFrame extends JFrame {
                     drawboxes.draw(rectangle2D);
                 }
             }
+
+           //画用于单击选择的透明倍位矩形，矩形的范围略大于集装箱
+            for(int i = 0 ; i < bayCount;i++) {
+                //画一个透明的倍位框，用来单击选择倍位
+                int yStart = SHIPY[1]-(MaxTierUnderForDrawBoat + 3)*boxHeight - (MaxTierAboveForDrawString + 3) * boxHeight - 10;//透明倍位的纵坐标起点。略高于集装箱
+                 rectangle2D[i] = new Rectangle2D.Double(SHIPX[1]+ boxWidth * (i+1) + (i/2)*gap,yStart,boxWidth,SHIPY[1] - yStart + 20);//画斗透明倍位
+                AlphaComposite ac = AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.0f); //最后一个参数代表不透明度 即 当 最后一个参数为 0.1f 时 画笔的透明度就为90%
+                drawboxes.setComposite(ac);
+                drawboxes.fill( rectangle2D[i]);//填充透明的倍位
+            }
         }
 
+        //判断点击坐标在哪个倍位
+        public void mouseClicked(MouseEvent e){
+            for(int i=0;i<bayCount;i++){
+                if(rectangle2D[i].contains(e.getX(),e.getY())){
+                    textField.setText(i*2+1+"");
+                    textField.setVisible(true);
+                }
+            }
+
+        }
+        public void mouseReleased(MouseEvent e){
+
+        }
+        public void mouseEntered(MouseEvent e){
+
+        }
+        public void mousePressed(MouseEvent e){
+
+        }
+        public void mouseExited(MouseEvent e){
+
+        }
     }
 }

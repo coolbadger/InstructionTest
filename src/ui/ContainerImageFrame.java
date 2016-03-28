@@ -11,6 +11,7 @@ public class ContainerImageFrame extends JFrame{
     private JLabel boardLabel;
     private JScrollPane scrollPane;
     private JPanel forScrolPanel;
+    private JLabel title;
 
 //    ContainerImageFrame(){initComponents();}
 
@@ -22,9 +23,14 @@ public class ContainerImageFrame extends JFrame{
         this.setSize(1200,800);
         //甲板字样
         boardLabel = new JLabel();
-        boardLabel.setFont(new Font("宋体",Font.BOLD,30));
+        boardLabel.setFont(new Font("宋体",Font.BOLD,20));
         boardLabel.setHorizontalAlignment(JLabel.RIGHT);
-        boardLabel.setText("    甲板");
+        boardLabel.setText("  甲板");
+        //倍位字样
+        title = new JLabel();
+        title.setFont(new Font("宋体",Font.BOLD,20));
+        title.setHorizontalAlignment(JLabel.CENTER);
+        title.setText("第"+bayID+"倍概图");
 
         //集装箱panel
         contentPanel = new JPanel();
@@ -41,6 +47,7 @@ public class ContainerImageFrame extends JFrame{
         forScrolPanel = new JPanel();
         forScrolPanel.setLayout(new BorderLayout(0,0));
         forScrolPanel.add(boardLabel,BorderLayout.WEST);
+        forScrolPanel.add(title,BorderLayout.NORTH);
         forScrolPanel.add(contentPanel,BorderLayout.CENTER);
 
         scrollPane = new JScrollPane();
